@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Tracker Remover</string>
+    <string name="settings_title">Settings</string>
+    <string name="history_title">History</string>
+
+    <string name="hint_paste_link">Paste a link here</string>
+    <string name="action_clean">Clean link</string>
+    <string name="action_copy">Copy</string>
+    <string name="action_open">Open</string>
+    <string name="action_share">Share</string>
+    <string name="empty_input_error">Paste a link first</string>
+    <string name="no_link_found_error">No valid link found in that text</string>
+
+    <string name="label_original">Original</string>
+    <string name="label_cleaned">Cleaned</string>
+    <string name="label_removed_params">Trackers removed (%1$d)</string>
+    <string name="label_no_trackers">No tracking parameters found, link is already clean</string>
+    <string name="label_short_url_resolved">Short URL (resolved)</string>
+    <string name="label_why_this_matters">Why this matters</string>
+    <string name="label_resolving">Following redirect…</string>
+    <string name="label_checking_safety">Checking link safety…</string>
+
+    <string name="safety_safe">Looks safe</string>
+    <string name="safety_suspicious">Suspicious</string>
+    <string name="safety_malicious">Flagged as unsafe</string>
+    <string name="safety_unknown">Not checked</string>
+    <string name="safety_domain_age">Domain age: %1$s</string>
+    <string name="safety_domain_new_warning">This domain was registered very recently</string>
+
+    <string name="settings_section_safety">Safety checks</string>
+    <string name="settings_enable_safe_browsing">Google Safe Browsing</string>
+    <string name="settings_enable_safe_browsing_desc">Checks the link against Google\'s malware/phishing list</string>
+    <string name="settings_safe_browsing_key_hint">Safe Browsing API key</string>
+    <string name="settings_enable_virustotal">VirusTotal</string>
+    <string name="settings_enable_virustotal_desc">Checks the link against multiple antivirus engines</string>
+    <string name="settings_virustotal_key_hint">VirusTotal API key</string>
+    <string name="settings_enable_domain_age">Domain age check</string>
+    <string name="settings_enable_domain_age_desc">Warns when a domain was registered very recently (no key needed)</string>
+    <string name="settings_section_general">General</string>
+    <string name="settings_save_history">Save cleaned links to history</string>
+    <string name="settings_save_history_desc">Turn off if you don\'t want a local log kept on this device</string>
+    <string name="settings_clear_history">Clear history</string>
+    <string name="settings_clear_history_done">History cleared</string>
+    <string name="settings_key_saved">Saved</string>
+
+    <string name="history_empty">Nothing cleaned yet</string>
+    <string name="history_clear_confirm_title">Clear all history?</string>
+    <string name="history_clear_confirm_message">This removes every saved entry from this device. This can\'t be undone.</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_clear">Clear</string>
+
+    <string name="menu_settings">Settings</string>
+    <string name="menu_history">History</string>
+
+    <string name="share_clean_progress">Cleaning link…</string>
+    <string name="share_clean_no_link">No link found in what was shared</string>
+    <string name="share_clean_chooser_title">Share cleaned link</string>
+</resources>
