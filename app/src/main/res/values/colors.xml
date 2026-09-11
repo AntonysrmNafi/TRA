@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bv_purple">#6C5CE7</color>
+    <color name="bv_purple_dark">#4A3FB8</color>
+    <color name="bv_bg">#F7F7FB</color>
+    <color name="bv_surface">#FFFFFF</color>
+    <color name="bv_text_primary">#1B1B22</color>
+    <color name="bv_text_secondary">#6B6B76</color>
+    <color name="bv_safe">#2ECC71</color>
+    <color name="bv_suspicious">#F5A623</color>
+    <color name="bv_malicious">#E74C3C</color>
+    <color name="bv_unknown">#9AA0A6</color>
+    <color name="bv_divider">#E7E7EF</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+</resources>
