@@ -18,6 +18,12 @@ interface CleanedLinkDao {
     @Query("SELECT COUNT(*) FROM cleaned_links")
     suspend fun count(): Int
 
+    @Query("SELECT COUNT(*) FROM cleaned_links")
+    fun observeCount(): Flow<Int>
+
+    @Query("SELECT COALESCE(SUM(removedParamsCount), 0) FROM cleaned_links")
+    fun observeTotalTrackersRemoved(): Flow<Int>
+
     @Query("DELETE FROM cleaned_links")
     suspend fun clearAll()
 
