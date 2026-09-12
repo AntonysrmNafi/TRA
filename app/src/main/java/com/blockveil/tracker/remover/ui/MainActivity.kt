@@ -32,12 +32,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        // Deliberately NOT calling setSupportActionBar(binding.toolbar) here:
-        // doing so hands menu control to the ActionBar's onCreateOptionsMenu
-        // (which we don't override), and it wipes out the icons set via the
-        // toolbar's app:menu XML attribute. Managing the toolbar's menu
-        // directly avoids that conflict.
-        binding.toolbar.inflateMenu(R.menu.menu_main)
 
         binding.cleanButton.setOnClickListener { cleanCurrentInput() }
         binding.copyButton.setOnClickListener { copyResult() }
@@ -47,21 +41,15 @@ class MainActivity : AppCompatActivity() {
         binding.seeAllText.setOnClickListener {
             startActivity(Intent(this, HistoryActivity::class.java))
         }
+        binding.historyButton.setOnClickListener {
+            startActivity(Intent(this, HistoryActivity::class.java))
+        }
+        binding.settingsButton.setOnClickListener {
+            startActivity(Intent(this, SettingsActivity::class.java))
+        }
 
         binding.recentList.layoutManager = LinearLayoutManager(this)
         binding.recentList.adapter = recentAdapter
-
-        binding.toolbar.setOnMenuItemClickListener { item ->
-            when (item.itemId) {
-                R.id.action_settings -> {
-                    startActivity(Intent(this, SettingsActivity::class.java)); true
-                }
-                R.id.action_history -> {
-                    startActivity(Intent(this, HistoryActivity::class.java)); true
-                }
-                else -> false
-            }
-        }
 
         // Hide the previous result as soon as the user edits the text again,
         // so a stale "cleaned" card never sits next to different input.
