@@ -9,7 +9,10 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.blockveil.tracker.remover.R
 import com.blockveil.tracker.remover.TrackerRemoverApp
 import com.blockveil.tracker.remover.databinding.ActivityMainBinding
@@ -21,6 +24,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private var currentCleanedUrl: String? = null
+    private val recentAdapter = HistoryAdapter()
 
     private val app: TrackerRemoverApp by lazy { application as TrackerRemoverApp }
 
@@ -28,12 +32,24 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.toolbar)
+        // Deliberately NOT calling setSupportActionBar(binding.toolbar) here:
+        // doing so hands menu control to the ActionBar's onCreateOptionsMenu
+        // (which we don't override), and it wipes out the icons set via the
+        // toolbar's app:menu XML attribute. Managing the toolbar's menu
+        // directly avoids that conflict.
+        binding.toolbar.inflateMenu(R.menu.menu_main)
 
         binding.cleanButton.setOnClickListener { cleanCurrentInput() }
         binding.copyButton.setOnClickListener { copyResult() }
         binding.shareButton.setOnClickListener { shareResult() }
         binding.openButton.setOnClickListener { openResult() }
+        binding.pasteButton.setOnClickListener { pasteFromClipboard() }
+        binding.seeAllText.setOnClickListener {
+            startActivity(Intent(this, HistoryActivity::class.java))
+        }
+
+        binding.recentList.layoutManager = LinearLayoutManager(this)
+        binding.recentList.adapter = recentAdapter
 
         binding.toolbar.setOnMenuItemClickListener { item ->
             when (item.itemId) {
@@ -50,6 +66,32 @@ class MainActivity : AppCompatActivity() {
         // Hide the previous result as soon as the user edits the text again,
         // so a stale "cleaned" card never sits next to different input.
         binding.linkInput.doOnTextChanged { _, _, _, _ -> binding.resultCard.visibility = android.view.View.GONE }
+
+        observeRecentHistory()
+    }
+
+    /** Keeps the "Recent" strip on the main screen in sync with history, only while visible. */
+    private fun observeRecentHistory() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                app.database.cleanedLinkDao().observeAll().collect { items ->
+                    val recentThree = items.take(3)
+                    recentAdapter.submitList(recentThree)
+                    binding.recentSection.visibility = if (recentThree.isEmpty()) android.view.View.GONE else android.view.View.VISIBLE
+                }
+            }
+        }
+    }
+
+    private fun pasteFromClipboard() {
+        val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clipText = clipboard.primaryClip?.takeIf { it.itemCount > 0 }?.getItemAt(0)?.text
+        if (clipText.isNullOrBlank()) {
+            Toast.makeText(this, R.string.clipboard_empty, Toast.LENGTH_SHORT).show()
+            return
+        }
+        binding.linkInput.setText(clipText)
+        binding.linkInput.setSelection(clipText.length)
     }
 
     private fun cleanCurrentInput() {
