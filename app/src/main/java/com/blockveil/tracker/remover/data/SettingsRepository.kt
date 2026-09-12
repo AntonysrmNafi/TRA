@@ -38,6 +38,11 @@ class SettingsRepository(context: Context) {
         get() = prefs.getBoolean(KEY_SAVE_HISTORY, true)
         set(value) = prefs.edit().putBoolean(KEY_SAVE_HISTORY, value).apply()
 
+    /** One of "system", "light", "dark". */
+    var themeMode: String
+        get() = prefs.getString(KEY_THEME_MODE, "system") ?: "system"
+        set(value) = prefs.edit().putString(KEY_THEME_MODE, value).apply()
+
     /** True if at least one online safety check is turned on. */
     fun anySafetyCheckEnabled(): Boolean =
         safeBrowsingEnabled || virusTotalEnabled || domainAgeEnabled
@@ -49,5 +54,6 @@ class SettingsRepository(context: Context) {
         private const val KEY_VT_KEY = "virustotal_key"
         private const val KEY_DOMAIN_AGE_ENABLED = "domain_age_enabled"
         private const val KEY_SAVE_HISTORY = "save_history"
+        private const val KEY_THEME_MODE = "theme_mode"
     }
 }
