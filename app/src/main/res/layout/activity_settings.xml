@@ -22,361 +22,367 @@
         android:layout_weight="1"
         android:fillViewport="true">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="20dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/settings_section_safety"
-            android:textColor="@color/bv_text_secondary"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="8dp" />
-
-        <androidx.cardview.widget.CardView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="14dp"
-            app:cardElevation="1dp"
-            app:cardBackgroundColor="@color/bv_surface">
+            android:orientation="vertical"
+            android:padding="16dp">
 
-            <LinearLayout
+            <!-- Safety checks tile -->
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/bv_tile_purple_bg">
 
-                <!-- Safe Browsing -->
-                <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/switchSafeBrowsing"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/settings_enable_safe_browsing" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/settings_enable_safe_browsing_desc"
-                    android:textColor="@color/bv_text_secondary"
-                    android:textSize="12sp"
-                    android:layout_marginBottom="8dp" />
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/safeBrowsingKeyLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/settings_safe_browsing_key_hint"
-                    app:endIconMode="password_toggle">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/safeBrowsingKeyInput"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textPassword" />
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:text="@string/settings_section_safety"
+                        android:textColor="@color/bv_tile_purple_text_secondary"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="10dp" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginVertical="16dp"
-                    android:background="@color/bv_divider" />
-
-                <!-- VirusTotal -->
-                <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/switchVirusTotal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/settings_enable_virustotal" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/settings_enable_virustotal_desc"
-                    android:textColor="@color/bv_text_secondary"
-                    android:textSize="12sp"
-                    android:layout_marginBottom="8dp" />
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/virusTotalKeyLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/settings_virustotal_key_hint"
-                    app:endIconMode="password_toggle">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/virusTotalKeyInput"
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/switchSafeBrowsing"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textPassword" />
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:text="@string/settings_enable_safe_browsing"
+                        android:textColor="@color/bv_tile_purple_text" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_enable_safe_browsing_desc"
+                        android:textColor="@color/bv_tile_purple_text_secondary"
+                        android:textSize="12sp"
+                        android:layout_marginBottom="8dp" />
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/safeBrowsingKeyLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/settings_safe_browsing_key_hint"
+                        app:boxBackgroundColor="@color/bv_surface"
+                        app:endIconMode="password_toggle">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/safeBrowsingKeyInput"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPassword" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginVertical="16dp"
-                    android:background="@color/bv_divider" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="14dp"
+                        android:background="#33FFFFFF" />
 
-                <!-- Domain age -->
-                <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/switchDomainAge"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/settings_enable_domain_age" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/settings_enable_domain_age_desc"
-                    android:textColor="@color/bv_text_secondary"
-                    android:textSize="12sp" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/switchVirusTotal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_enable_virustotal"
+                        android:textColor="@color/bv_tile_purple_text" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_enable_virustotal_desc"
+                        android:textColor="@color/bv_tile_purple_text_secondary"
+                        android:textSize="12sp"
+                        android:layout_marginBottom="8dp" />
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/virusTotalKeyLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/settings_virustotal_key_hint"
+                        app:boxBackgroundColor="@color/bv_surface"
+                        app:endIconMode="password_toggle">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/virusTotalKeyInput"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPassword" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/settings_section_appearance"
-            android:textColor="@color/bv_text_secondary"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="8dp" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="14dp"
+                        android:background="#33FFFFFF" />
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="14dp"
-            app:cardElevation="1dp"
-            app:cardBackgroundColor="@color/bv_surface">
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/switchDomainAge"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_enable_domain_age"
+                        android:textColor="@color/bv_tile_purple_text" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_enable_domain_age_desc"
+                        android:textColor="@color/bv_tile_purple_text_secondary"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-            <com.google.android.material.button.MaterialButtonToggleGroup
-                android:id="@+id/themeToggleGroup"
+            <!-- Appearance + History row -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="12dp"
-                app:singleSelection="true"
-                app:selectionRequired="true">
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/themeSystemButton"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                <androidx.cardview.widget.CardView
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="@string/theme_system" />
+                    android:layout_marginEnd="5dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="@color/bv_tile_teal_bg">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/themeLightButton"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="14dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/settings_section_appearance"
+                            android:textColor="@color/bv_tile_teal_text_secondary"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="8dp" />
+
+                        <com.google.android.material.button.MaterialButtonToggleGroup
+                            android:id="@+id/themeToggleGroup"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:singleSelection="true"
+                            app:selectionRequired="true">
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/themeSystemButton"
+                                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:insetTop="0dp"
+                                android:insetBottom="0dp"
+                                android:paddingHorizontal="0dp"
+                                android:textSize="11sp"
+                                android:text="@string/theme_system" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/themeLightButton"
+                                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:insetTop="0dp"
+                                android:insetBottom="0dp"
+                                android:paddingHorizontal="0dp"
+                                android:textSize="11sp"
+                                android:text="@string/theme_light" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/themeDarkButton"
+                                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:insetTop="0dp"
+                                android:insetBottom="0dp"
+                                android:paddingHorizontal="0dp"
+                                android:textSize="11sp"
+                                android:text="@string/theme_dark" />
+                        </com.google.android.material.button.MaterialButtonToggleGroup>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="@string/theme_light" />
+                    android:layout_marginStart="5dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="@color/bv_tile_coral_bg">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/themeDarkButton"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="0dp"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="14dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/settings_section_general"
+                            android:textColor="@color/bv_tile_coral_text"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="6dp" />
+
+                        <com.google.android.material.switchmaterial.SwitchMaterial
+                            android:id="@+id/switchSaveHistory"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/settings_save_history"
+                            android:textSize="12sp"
+                            android:textColor="@color/bv_tile_coral_text" />
+
+                        <TextView
+                            android:id="@+id/clearHistoryButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/settings_clear_history"
+                            android:textColor="@color/bv_tile_coral_text"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+            <!-- About tile -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/bv_surface">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/theme_dark" />
-            </com.google.android.material.button.MaterialButtonToggleGroup>
-        </androidx.cardview.widget.CardView>
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/settings_section_general"
-            android:textColor="@color/bv_text_secondary"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="8dp" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/app_name"
+                        android:textColor="@color/bv_text_primary"
+                        android:textStyle="bold"
+                        android:textSize="15sp" />
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="14dp"
-            app:cardElevation="1dp"
-            app:cardBackgroundColor="@color/bv_surface">
+                    <TextView
+                        android:id="@+id/versionText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:textColor="@color/bv_text_secondary"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/about_tagline"
+                        android:textColor="@color/bv_text_secondary"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/sourceLinkText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:text="@string/about_source_link"
+                        android:textColor="@color/bv_purple"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Other: 2-column icon tile grid -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_section_other"
+                android:textColor="@color/bv_text_secondary"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/switchSaveHistory"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/settings_save_history" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/settings_save_history_desc"
-                    android:textColor="@color/bv_text_secondary"
-                    android:textSize="12sp"
-                    android:layout_marginBottom="12dp" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/clearHistoryButton"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/settings_clear_history" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/settings_section_about"
-            android:textColor="@color/bv_text_secondary"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="8dp" />
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="14dp"
-            app:cardElevation="1dp"
-            app:cardBackgroundColor="@color/bv_surface">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/app_name"
-                    android:textColor="@color/bv_text_primary"
-                    android:textStyle="bold"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/versionText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:textColor="@color/bv_text_secondary"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/about_tagline"
-                    android:textColor="@color/bv_text_secondary"
-                    android:textSize="13sp" />
-
-                <TextView
-                    android:id="@+id/sourceLinkText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
-                    android:text="@string/about_source_link"
-                    android:textColor="@color/bv_purple"
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/settings_section_other"
-            android:textColor="@color/bv_text_secondary"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="8dp" />
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="14dp"
-            app:cardElevation="1dp"
-            app:cardBackgroundColor="@color/bv_surface">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:id="@+id/feedbackRow"
-                    style="@style/OtherSettingsRow">
-                    <ImageView style="@style/OtherSettingsRowIconBg" android:src="@drawable/ic_feedback" />
-                    <LinearLayout style="@style/OtherSettingsRowText">
-                        <TextView style="@style/OtherSettingsRowTitle" android:text="@string/other_feedback_title" />
-                        <TextView style="@style/OtherSettingsRowDesc" android:text="@string/other_feedback_desc" />
-                    </LinearLayout>
+                    style="@style/OtherGridTile"
+                    android:layout_marginEnd="5dp">
+                    <ImageView style="@style/OtherGridTileIcon" android:src="@drawable/ic_feedback" app:tint="@color/bv_purple" android:contentDescription="@string/other_feedback_desc" />
+                    <TextView style="@style/OtherGridTileLabel" android:text="@string/other_feedback_title" />
                 </LinearLayout>
-
-                <View style="@style/OtherSettingsDivider" />
 
                 <LinearLayout
                     android:id="@+id/donateRow"
-                    style="@style/OtherSettingsRow">
-                    <ImageView style="@style/OtherSettingsRowIconBg" android:src="@drawable/ic_donate" />
-                    <LinearLayout style="@style/OtherSettingsRowText">
-                        <TextView style="@style/OtherSettingsRowTitle" android:text="@string/other_donate_title" />
-                        <TextView style="@style/OtherSettingsRowDesc" android:text="@string/other_donate_desc" />
-                    </LinearLayout>
+                    style="@style/OtherGridTile"
+                    android:layout_marginStart="5dp">
+                    <ImageView style="@style/OtherGridTileIcon" android:src="@drawable/ic_donate" app:tint="@color/bv_tile_pink_text" android:contentDescription="@string/other_donate_desc" />
+                    <TextView style="@style/OtherGridTileLabel" android:text="@string/other_donate_title" />
                 </LinearLayout>
+            </LinearLayout>
 
-                <View style="@style/OtherSettingsDivider" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:id="@+id/sourceCodeRow"
-                    style="@style/OtherSettingsRow">
-                    <ImageView style="@style/OtherSettingsRowIconBg" android:src="@drawable/ic_source_code" />
-                    <LinearLayout style="@style/OtherSettingsRowText">
-                        <TextView style="@style/OtherSettingsRowTitle" android:text="@string/other_source_title" />
-                        <TextView style="@style/OtherSettingsRowDesc" android:text="@string/other_source_desc" />
-                    </LinearLayout>
+                    style="@style/OtherGridTile"
+                    android:layout_marginEnd="5dp">
+                    <ImageView style="@style/OtherGridTileIcon" android:src="@drawable/ic_source_code" app:tint="@color/bv_tile_teal_text" android:contentDescription="@string/other_source_desc" />
+                    <TextView style="@style/OtherGridTileLabel" android:text="@string/other_source_title" />
                 </LinearLayout>
-
-                <View style="@style/OtherSettingsDivider" />
 
                 <LinearLayout
                     android:id="@+id/dataCollectionRow"
-                    style="@style/OtherSettingsRow">
-                    <ImageView style="@style/OtherSettingsRowIconBg" android:src="@drawable/ic_data_collection" />
-                    <LinearLayout style="@style/OtherSettingsRowText">
-                        <TextView style="@style/OtherSettingsRowTitle" android:text="@string/other_data_collection_title" />
-                        <TextView style="@style/OtherSettingsRowDesc" android:text="@string/other_data_collection_desc" />
-                    </LinearLayout>
+                    style="@style/OtherGridTile"
+                    android:layout_marginStart="5dp">
+                    <ImageView style="@style/OtherGridTileIcon" android:src="@drawable/ic_data_collection" app:tint="@color/bv_tile_coral_text" android:contentDescription="@string/other_data_collection_desc" />
+                    <TextView style="@style/OtherGridTileLabel" android:text="@string/other_data_collection_title" />
                 </LinearLayout>
+            </LinearLayout>
 
-                <View style="@style/OtherSettingsDivider" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:id="@+id/privacyPolicyRow"
-                    style="@style/OtherSettingsRow">
-                    <ImageView style="@style/OtherSettingsRowIconBg" android:src="@drawable/ic_privacy" />
-                    <LinearLayout style="@style/OtherSettingsRowText">
-                        <TextView style="@style/OtherSettingsRowTitle" android:text="@string/other_privacy_title" />
-                        <TextView style="@style/OtherSettingsRowDesc" android:text="@string/other_privacy_desc" />
-                    </LinearLayout>
+                    style="@style/OtherGridTile"
+                    android:layout_marginEnd="5dp">
+                    <ImageView style="@style/OtherGridTileIcon" android:src="@drawable/ic_privacy" app:tint="@color/bv_icon_blue" android:contentDescription="@string/other_privacy_desc" />
+                    <TextView style="@style/OtherGridTileLabel" android:text="@string/other_privacy_title" />
                 </LinearLayout>
-
-                <View style="@style/OtherSettingsDivider" />
 
                 <LinearLayout
                     android:id="@+id/termsRow"
-                    style="@style/OtherSettingsRow">
-                    <ImageView style="@style/OtherSettingsRowIconBg" android:src="@drawable/ic_terms" />
-                    <LinearLayout style="@style/OtherSettingsRowText">
-                        <TextView style="@style/OtherSettingsRowTitle" android:text="@string/other_terms_title" />
-                        <TextView style="@style/OtherSettingsRowDesc" android:text="@string/other_terms_desc" />
-                    </LinearLayout>
+                    style="@style/OtherGridTile"
+                    android:layout_marginStart="5dp">
+                    <ImageView style="@style/OtherGridTileIcon" android:src="@drawable/ic_terms" app:tint="@color/bv_icon_amber" android:contentDescription="@string/other_terms_desc" />
+                    <TextView style="@style/OtherGridTileLabel" android:text="@string/other_terms_title" />
                 </LinearLayout>
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
-    </LinearLayout>
+        </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>
