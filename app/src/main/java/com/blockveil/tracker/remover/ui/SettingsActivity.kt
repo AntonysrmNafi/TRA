@@ -1,15 +1,19 @@
 package com.blockveil.tracker.remover.ui
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
+import com.blockveil.tracker.remover.BuildConfig
 import com.blockveil.tracker.remover.R
 import com.blockveil.tracker.remover.TrackerRemoverApp
 import com.blockveil.tracker.remover.data.SettingsRepository
 import com.blockveil.tracker.remover.databinding.ActivitySettingsBinding
+import com.blockveil.tracker.remover.util.ThemeMode
 import kotlinx.coroutines.launch
 
 class SettingsActivity : AppCompatActivity() {
@@ -39,6 +43,15 @@ class SettingsActivity : AppCompatActivity() {
 
         binding.switchDomainAge.isChecked = settings.domainAgeEnabled
         binding.switchSaveHistory.isChecked = settings.saveHistory
+
+        val themeButtonId = when (settings.themeMode) {
+            "light" -> R.id.themeLightButton
+            "dark" -> R.id.themeDarkButton
+            else -> R.id.themeSystemButton
+        }
+        binding.themeToggleGroup.check(themeButtonId)
+
+        binding.versionText.text = getString(R.string.about_version, BuildConfig.VERSION_NAME)
     }
 
     private fun wireListeners() {
@@ -67,6 +80,23 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         binding.clearHistoryButton.setOnClickListener { confirmClearHistory() }
+
+        binding.themeToggleGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
+            if (!isChecked) return@addOnButtonCheckedListener
+            val mode = when (checkedId) {
+                R.id.themeLightButton -> "light"
+                R.id.themeDarkButton -> "dark"
+                else -> "system"
+            }
+            settings.themeMode = mode
+            ThemeMode.apply(mode)
+        }
+
+        binding.sourceLinkText.setOnClickListener {
+            runCatching {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/AntonysrmNafi/TRA")))
+            }
+        }
     }
 
     private fun confirmClearHistory() {
