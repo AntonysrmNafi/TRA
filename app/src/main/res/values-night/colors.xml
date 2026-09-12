@@ -8,4 +8,16 @@
     <color name="bv_text_secondary">#ACACB8</color>
     <color name="bv_divider">#2E2E38</color>
     <color name="bv_unknown">#7D818A</color>
+
+    <color name="bv_tile_purple_bg">#2A2440</color>
+    <color name="bv_tile_purple_text">#CECBF6</color>
+    <color name="bv_tile_purple_text_secondary">#AFA9EC</color>
+    <color name="bv_tile_teal_bg">#163832</color>
+    <color name="bv_tile_teal_text">#9FE1CB</color>
+    <color name="bv_tile_teal_text_secondary">#5DCAA5</color>
+    <color name="bv_tile_coral_bg">#3D2117</color>
+    <color name="bv_tile_coral_text">#F5C4B3</color>
+    <color name="bv_tile_pink_bg">#3D1F2B</color>
+    <color name="bv_tile_pink_text">#F4C0D1</color>
+    <color name="bv_tile_hero_bg">#1A1740</color>
 </resources>
