@@ -59,7 +59,35 @@
     <string name="about_version">Version %1$s</string>
     <string name="about_source_link">View source on GitHub</string>
 
+    <string name="settings_section_other">Other</string>
+
+    <string name="other_feedback_title">Feedback</string>
+    <string name="other_feedback_desc">Send an email with feedback</string>
+
+    <string name="other_donate_title">Donate</string>
+    <string name="other_donate_desc">Support development of Tracker Remover</string>
+
+    <string name="other_source_title">Source Code</string>
+    <string name="other_source_desc">View and contribute on GitHub</string>
+
+    <string name="other_data_collection_title">Data collection</string>
+    <string name="other_data_collection_desc">What this app does and doesn\'t collect</string>
+
+    <string name="other_privacy_title">Privacy Policy</string>
+    <string name="other_privacy_desc">How your data is (and isn\'t) handled</string>
+
+    <string name="other_terms_title">Terms and Conditions</string>
+    <string name="other_terms_desc">Terms for using this app</string>
+
+    <string name="data_collection_content">Tracker Remover does not collect, transmit, or sell any usage data, analytics, or personal information. There is no analytics SDK, crash reporter, or advertising SDK in this app.\n\nWhat stays on your device:\n• Cleaned-link history (the original link, cleaned link, domain, and timestamp) is stored only in a local database on your phone. Turn it off or clear it anytime in Settings.\n• Safe Browsing and VirusTotal API keys, if you add them, are stored only in local app storage on your device.\n\nWhat leaves your device (only if you turn it on):\n• If you enable Safe Browsing, VirusTotal, or the domain-age check in Settings, the link you\'re cleaning (not your history, not your keys) is sent directly from your device to that service\'s own servers (Google, VirusTotal, or the RDAP registry) to get a verdict. Those requests go straight to them, not through any server run by this app\'s developer, because there is no such server.\n• Following a shortened link (bit.ly, t.co, etc.) to find its real destination also requires a direct connection from your device to that link\'s host.\n\nThat\'s the complete list. Nothing else is sent anywhere.</string>
+
+    <string name="privacy_policy_content">Last updated: 2026\n\nTracker Remover is a personal, self-contained app. This policy describes exactly what happens to your data, because there isn\'t much to describe.\n\n1. No developer-run server\nThis app has no backend server. Nothing you do in this app is sent to, logged by, or stored by its developer, because there is nowhere for it to go.\n\n2. What\'s stored locally on your device\n• Cleaned-link history: original link, cleaned link, domain, timestamp, and safety verdict, stored in a local database on your phone only.\n• Settings and API keys you enter: stored in local app storage on your device only.\nYou can clear history or turn off saving it at any time in Settings. Uninstalling the app deletes all of it.\n\n3. What\'s sent over the network, and to whom\nThese only happen for the specific action you take, and go directly from your device to the third party, never through the developer:\n• Resolving a shortened link: a request to that link\'s own host to follow its redirect.\n• Google Safe Browsing (only if you enable it and add a key): the link is sent to Google\'s Safe Browsing API.\n• VirusTotal (only if you enable it and add a key): the link is sent to VirusTotal\'s API.\n• Domain age check (only if enabled): the domain is sent to a public RDAP lookup service.\nEach of the above is governed by that third party\'s own privacy policy, not this one.\n\n4. Your API keys\nIf you add your own Safe Browsing or VirusTotal API key, it\'s used only to make the request described above and is never sent anywhere else.\n\n5. Children\'s privacy\nThis app doesn\'t knowingly collect data from anyone, so this doesn\'t change for children.\n\n6. Changes to this policy\nIf this policy changes, the updated version will ship with a new app version.\n\n7. Contact\nQuestions about this policy can be sent through the Feedback option in Settings.</string>
+
+    <string name="terms_content">Last updated: 2026\n\nBy using Tracker Remover, you agree to the following:\n\n1. What this app does\nTracker Remover strips known tracking parameters from links, can follow shortened links to their real destination, and can optionally check a link\'s safety using services you enable and provide your own API keys for.\n\n2. No warranty\nThis app is provided \"as is,\" without warranty of any kind. Safety checks (Safe Browsing, VirusTotal, domain age) are best-effort signals, not guarantees — a link marked safe can still turn out to be harmful, and the absence of a check result never means a link is unsafe. Use your own judgment before opening or sharing any link.\n\n3. Your responsibility\nYou\'re responsible for any API keys you add and for complying with the terms of the services those keys belong to (Google Safe Browsing, VirusTotal). You\'re responsible for how you use cleaned or shared links.\n\n4. No liability\nThe developer isn\'t liable for any damage or loss resulting from use of this app, to the fullest extent permitted by law.\n\n5. Open source\nThis app\'s source code is available under the terms in its repository (see Source Code in Settings).\n\n6. Changes\nThese terms may change in future versions of the app. Continued use after an update means you accept the current terms.\n\n7. Contact\nQuestions can be sent through the Feedback option in Settings.</string>
+
     <string name="history_empty">Nothing cleaned yet</string>
+    <string name="history_item_deleted">Entry deleted</string>
+    <string name="action_undo">Undo</string>
     <string name="history_clear_confirm_title">Clear all history?</string>
     <string name="history_clear_confirm_message">This removes every saved entry from this device. This can\'t be undone.</string>
     <string name="action_cancel">Cancel</string>
