@@ -13,4 +13,16 @@
     <color name="bv_divider">#E7E7EF</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+
+    <color name="bv_tile_purple_bg">#F4F2FC</color>
+    <color name="bv_tile_purple_text">#3C3489</color>
+    <color name="bv_tile_purple_text_secondary">#8A86A8</color>
+    <color name="bv_tile_teal_bg">#E1F5EE</color>
+    <color name="bv_tile_teal_text">#085041</color>
+    <color name="bv_tile_teal_text_secondary">#3E8F76</color>
+    <color name="bv_tile_coral_bg">#FAECE7</color>
+    <color name="bv_tile_coral_text">#993C1D</color>
+    <color name="bv_tile_pink_bg">#FBEAF0</color>
+    <color name="bv_tile_pink_text">#993556</color>
+    <color name="bv_tile_hero_bg">#26215C</color>
 </resources>
