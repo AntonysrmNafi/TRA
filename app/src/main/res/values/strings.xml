@@ -17,6 +17,11 @@
     <string name="recent_section_title">Recent</string>
     <string name="recent_see_all">See all</string>
 
+    <string name="stat_links_cleaned">links cleaned</string>
+    <string name="stat_trackers_blocked">trackers blocked</string>
+    <string name="nav_history_tile">History</string>
+    <string name="nav_settings_tile">Settings</string>
+
     <string name="label_original">Original</string>
     <string name="label_cleaned">Cleaned</string>
     <string name="label_removed_params">Trackers removed (%1$d)</string>
