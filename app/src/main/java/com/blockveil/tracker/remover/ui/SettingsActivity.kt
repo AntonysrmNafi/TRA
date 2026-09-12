@@ -13,6 +13,7 @@ import com.blockveil.tracker.remover.R
 import com.blockveil.tracker.remover.TrackerRemoverApp
 import com.blockveil.tracker.remover.data.SettingsRepository
 import com.blockveil.tracker.remover.databinding.ActivitySettingsBinding
+import com.blockveil.tracker.remover.util.AppLinks
 import com.blockveil.tracker.remover.util.ThemeMode
 import kotlinx.coroutines.launch
 
@@ -92,11 +93,46 @@ class SettingsActivity : AppCompatActivity() {
             ThemeMode.apply(mode)
         }
 
-        binding.sourceLinkText.setOnClickListener {
-            runCatching {
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/AntonysrmNafi/TRA")))
-            }
+        binding.sourceLinkText.setOnClickListener { openUrl(AppLinks.SOURCE_URL) }
+
+        binding.feedbackRow.setOnClickListener { openFeedbackEmail() }
+        binding.donateRow.setOnClickListener { openUrl(AppLinks.DONATE_URL) }
+        binding.sourceCodeRow.setOnClickListener { openUrl(AppLinks.SOURCE_URL) }
+
+        binding.dataCollectionRow.setOnClickListener {
+            TextDocumentActivity.launch(
+                this,
+                getString(R.string.other_data_collection_title),
+                getString(R.string.data_collection_content)
+            )
         }
+        binding.privacyPolicyRow.setOnClickListener {
+            TextDocumentActivity.launch(
+                this,
+                getString(R.string.other_privacy_title),
+                getString(R.string.privacy_policy_content)
+            )
+        }
+        binding.termsRow.setOnClickListener {
+            TextDocumentActivity.launch(
+                this,
+                getString(R.string.other_terms_title),
+                getString(R.string.terms_content)
+            )
+        }
+    }
+
+    private fun openUrl(url: String) {
+        runCatching { startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url))) }
+    }
+
+    private fun openFeedbackEmail() {
+        val intent = Intent(Intent.ACTION_SENDTO).apply {
+            data = Uri.parse("mailto:")
+            putExtra(Intent.EXTRA_EMAIL, arrayOf(AppLinks.FEEDBACK_EMAIL))
+            putExtra(Intent.EXTRA_SUBJECT, "${getString(R.string.app_name)} feedback")
+        }
+        runCatching { startActivity(intent) }
     }
 
     private fun confirmClearHistory() {
