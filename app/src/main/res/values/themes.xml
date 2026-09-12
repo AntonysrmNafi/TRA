@@ -19,55 +19,31 @@
         <item name="android:backgroundDimEnabled">true</item>
     </style>
 
-    <!-- Settings > Other row styles: a clickable icon + title + subtitle
-         row, matching Photok-style settings lists. -->
-    <style name="OtherSettingsRow">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:orientation">horizontal</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:padding">14dp</item>
-        <item name="android:clickable">true</item>
-        <item name="android:focusable">true</item>
-        <item name="android:background">?attr/selectableItemBackground</item>
-    </style>
-
-    <style name="OtherSettingsRowIconBg">
-        <item name="android:layout_width">36dp</item>
-        <item name="android:layout_height">36dp</item>
-        <item name="android:background">@drawable/bg_icon_circle</item>
-        <item name="android:padding">8dp</item>
-        <item name="android:scaleType">centerInside</item>
-    </style>
-
-    <style name="OtherSettingsRowText">
+    <!-- Settings > Other grid tile styles: icon-over-label tappable tile. -->
+    <style name="OtherGridTile">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
         <item name="android:orientation">vertical</item>
-        <item name="android:layout_marginStart">14dp</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:padding">14dp</item>
+        <item name="android:background">@drawable/bg_tile_neutral</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
     </style>
 
-    <style name="OtherSettingsRowTitle">
-        <item name="android:layout_width">match_parent</item>
+    <style name="OtherGridTileIcon">
+        <item name="android:layout_width">22dp</item>
+        <item name="android:layout_height">22dp</item>
+    </style>
+
+    <style name="OtherGridTileLabel">
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">8dp</item>
         <item name="android:textColor">@color/bv_text_primary</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="OtherSettingsRowDesc">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">2dp</item>
-        <item name="android:textColor">@color/bv_text_secondary</item>
         <item name="android:textSize">12sp</item>
-    </style>
-
-    <style name="OtherSettingsDivider">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">1dp</item>
-        <item name="android:layout_marginStart">64dp</item>
-        <item name="android:background">@color/bv_divider</item>
+        <item name="android:textStyle">bold</item>
     </style>
 </resources>
