@@ -20,4 +20,6 @@
     <color name="bv_tile_pink_bg">#3D1F2B</color>
     <color name="bv_tile_pink_text">#F4C0D1</color>
     <color name="bv_tile_hero_bg">#1A1740</color>
+    <color name="bv_icon_blue">#85B7EB</color>
+    <color name="bv_icon_amber">#EF9F27</color>
 </resources>
