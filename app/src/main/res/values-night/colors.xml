@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Same color names as values/colors.xml — only the values differ.
+     Picked up automatically in dark mode, no extra code needed. -->
+<resources>
+    <color name="bv_bg">#121218</color>
+    <color name="bv_surface">#1E1E26</color>
+    <color name="bv_text_primary">#F1F1F5</color>
+    <color name="bv_text_secondary">#ACACB8</color>
+    <color name="bv_divider">#2E2E38</color>
+    <color name="bv_unknown">#7D818A</color>
+</resources>
