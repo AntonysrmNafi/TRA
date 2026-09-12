@@ -41,10 +41,10 @@ class MainActivity : AppCompatActivity() {
         binding.seeAllText.setOnClickListener {
             startActivity(Intent(this, HistoryActivity::class.java))
         }
-        binding.historyButton.setOnClickListener {
+        binding.historyTile.setOnClickListener {
             startActivity(Intent(this, HistoryActivity::class.java))
         }
-        binding.settingsButton.setOnClickListener {
+        binding.settingsTile.setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
 
@@ -56,6 +56,18 @@ class MainActivity : AppCompatActivity() {
         binding.linkInput.doOnTextChanged { _, _, _, _ -> binding.resultCard.visibility = android.view.View.GONE }
 
         observeRecentHistory()
+        observeStats()
+    }
+
+    /** Keeps the two bento stat tiles (links cleaned, trackers blocked) live. */
+    private fun observeStats() {
+        val dao = app.database.cleanedLinkDao()
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch { dao.observeCount().collect { binding.statLinksCountText.text = it.toString() } }
+                launch { dao.observeTotalTrackersRemoved().collect { binding.statTrackersCountText.text = it.toString() } }
+            }
+        }
     }
 
     /** Keeps the "Recent" strip on the main screen in sync with history, only while visible. */
