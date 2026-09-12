@@ -283,6 +283,100 @@
                     android:textStyle="bold" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_section_other"
+            android:textColor="@color/bv_text_secondary"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="8dp" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="14dp"
+            app:cardElevation="1dp"
+            app:cardBackgroundColor="@color/bv_surface">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/feedbackRow"
+                    style="@style/OtherSettingsRow">
+                    <ImageView style="@style/OtherSettingsRowIconBg" android:src="@drawable/ic_feedback" />
+                    <LinearLayout style="@style/OtherSettingsRowText">
+                        <TextView style="@style/OtherSettingsRowTitle" android:text="@string/other_feedback_title" />
+                        <TextView style="@style/OtherSettingsRowDesc" android:text="@string/other_feedback_desc" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View style="@style/OtherSettingsDivider" />
+
+                <LinearLayout
+                    android:id="@+id/donateRow"
+                    style="@style/OtherSettingsRow">
+                    <ImageView style="@style/OtherSettingsRowIconBg" android:src="@drawable/ic_donate" />
+                    <LinearLayout style="@style/OtherSettingsRowText">
+                        <TextView style="@style/OtherSettingsRowTitle" android:text="@string/other_donate_title" />
+                        <TextView style="@style/OtherSettingsRowDesc" android:text="@string/other_donate_desc" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View style="@style/OtherSettingsDivider" />
+
+                <LinearLayout
+                    android:id="@+id/sourceCodeRow"
+                    style="@style/OtherSettingsRow">
+                    <ImageView style="@style/OtherSettingsRowIconBg" android:src="@drawable/ic_source_code" />
+                    <LinearLayout style="@style/OtherSettingsRowText">
+                        <TextView style="@style/OtherSettingsRowTitle" android:text="@string/other_source_title" />
+                        <TextView style="@style/OtherSettingsRowDesc" android:text="@string/other_source_desc" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View style="@style/OtherSettingsDivider" />
+
+                <LinearLayout
+                    android:id="@+id/dataCollectionRow"
+                    style="@style/OtherSettingsRow">
+                    <ImageView style="@style/OtherSettingsRowIconBg" android:src="@drawable/ic_data_collection" />
+                    <LinearLayout style="@style/OtherSettingsRowText">
+                        <TextView style="@style/OtherSettingsRowTitle" android:text="@string/other_data_collection_title" />
+                        <TextView style="@style/OtherSettingsRowDesc" android:text="@string/other_data_collection_desc" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View style="@style/OtherSettingsDivider" />
+
+                <LinearLayout
+                    android:id="@+id/privacyPolicyRow"
+                    style="@style/OtherSettingsRow">
+                    <ImageView style="@style/OtherSettingsRowIconBg" android:src="@drawable/ic_privacy" />
+                    <LinearLayout style="@style/OtherSettingsRowText">
+                        <TextView style="@style/OtherSettingsRowTitle" android:text="@string/other_privacy_title" />
+                        <TextView style="@style/OtherSettingsRowDesc" android:text="@string/other_privacy_desc" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View style="@style/OtherSettingsDivider" />
+
+                <LinearLayout
+                    android:id="@+id/termsRow"
+                    style="@style/OtherSettingsRow">
+                    <ImageView style="@style/OtherSettingsRowIconBg" android:src="@drawable/ic_terms" />
+                    <LinearLayout style="@style/OtherSettingsRowText">
+                        <TextView style="@style/OtherSettingsRowTitle" android:text="@string/other_terms_title" />
+                        <TextView style="@style/OtherSettingsRowDesc" android:text="@string/other_terms_desc" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>
