@@ -53,6 +53,10 @@
             android:label="@string/history_title" />
 
         <activity
+            android:name=".ui.HistoryDetailActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".ui.TextDocumentActivity"
             android:exported="false" />
 
