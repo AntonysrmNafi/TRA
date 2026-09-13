@@ -11,17 +11,23 @@ import com.blockveil.tracker.remover.safety.Verdict
 import java.text.DateFormat
 import java.util.Date
 
-class HistoryAdapter : ListAdapter<CleanedLinkEntity, HistoryAdapter.ViewHolder>(DIFF) {
+class HistoryAdapter(
+    private val onItemClick: (CleanedLinkEntity) -> Unit
+) : ListAdapter<CleanedLinkEntity, HistoryAdapter.ViewHolder>(DIFF) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemHistoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
+        return ViewHolder(binding, onItemClick)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(getItem(position))
 
-    class ViewHolder(private val binding: ItemHistoryBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(
+        private val binding: ItemHistoryBinding,
+        private val onItemClick: (CleanedLinkEntity) -> Unit
+    ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: CleanedLinkEntity) {
+            binding.root.setOnClickListener { onItemClick(item) }
             binding.domainText.text = item.domain.ifBlank { "unknown domain" }
             binding.cleanedText.text = item.cleaned
 
