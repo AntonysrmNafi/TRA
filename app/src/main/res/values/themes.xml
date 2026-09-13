@@ -8,15 +8,16 @@
         <item name="colorOnPrimary">@color/white</item>
     </style>
 
-    <!-- Used by ShareCleanActivity: a see-through window with just a small
-         progress card floating on top, so the flow feels instant rather
-         than like a full screen swap. -->
+    <!-- Used by ShareCleanActivity: a fully invisible window (no dim, no
+         animation, nothing drawn) so selecting this app from another app's
+         Share sheet never visibly looks like switching apps. -->
     <style name="Theme.TrackerRemover.Transparent" parent="Theme.TrackerRemover">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowAnimationStyle">@null</item>
-        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowDisablePreview">true</item>
     </style>
 
     <!-- Settings > Other grid tile styles: icon-over-label tappable tile. -->
