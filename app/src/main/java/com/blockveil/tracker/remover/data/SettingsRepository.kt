@@ -43,6 +43,26 @@ class SettingsRepository(context: Context) {
         get() = prefs.getString(KEY_THEME_MODE, "system") ?: "system"
         set(value) = prefs.edit().putString(KEY_THEME_MODE, value).apply()
 
+    /** Lifetime total of links cleaned. Never decreases, even if history entries are deleted. */
+    var totalLinksCleaned: Int
+        get() = prefs.getInt(KEY_TOTAL_LINKS_CLEANED, 0)
+        private set(value) = prefs.edit().putInt(KEY_TOTAL_LINKS_CLEANED, value).apply()
+
+    /** Lifetime total of individual trackers removed. Never decreases, even if history entries are deleted. */
+    var totalTrackersRemoved: Int
+        get() = prefs.getInt(KEY_TOTAL_TRACKERS_REMOVED, 0)
+        private set(value) = prefs.edit().putInt(KEY_TOTAL_TRACKERS_REMOVED, value).apply()
+
+    /**
+     * Call once per successfully cleaned link (whether or not history saving
+     * is on). These are lifetime usage counters, separate from the history
+     * table, so clearing or swiping away history entries never reduces them.
+     */
+    fun recordCleanedLink(trackerCount: Int) {
+        totalLinksCleaned += 1
+        totalTrackersRemoved += trackerCount
+    }
+
     /** True if at least one online safety check is turned on. */
     fun anySafetyCheckEnabled(): Boolean =
         safeBrowsingEnabled || virusTotalEnabled || domainAgeEnabled
@@ -55,5 +75,7 @@ class SettingsRepository(context: Context) {
         private const val KEY_DOMAIN_AGE_ENABLED = "domain_age_enabled"
         private const val KEY_SAVE_HISTORY = "save_history"
         private const val KEY_THEME_MODE = "theme_mode"
+        private const val KEY_TOTAL_LINKS_CLEANED = "total_links_cleaned"
+        private const val KEY_TOTAL_TRACKERS_REMOVED = "total_trackers_removed"
     }
 }
