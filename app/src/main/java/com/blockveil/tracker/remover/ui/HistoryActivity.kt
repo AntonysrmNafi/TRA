@@ -28,7 +28,7 @@ class HistoryActivity : AppCompatActivity() {
         binding.toolbar.setNavigationOnClickListener { finish() }
         app = application as TrackerRemoverApp
 
-        val adapter = HistoryAdapter()
+        val adapter = HistoryAdapter { entity -> HistoryDetailActivity.launch(this, entity) }
         binding.historyList.layoutManager = LinearLayoutManager(this)
         binding.historyList.adapter = adapter
 
