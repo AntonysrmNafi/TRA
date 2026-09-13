@@ -28,109 +28,105 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Safety checks tile -->
-            <androidx.cardview.widget.CardView
+            <!-- Safety checks tile. Plain LinearLayout + background drawable
+                 instead of CardView: same look (0dp elevation was already
+                 set, so there was no shadow to lose), noticeably cheaper to
+                 inflate since it skips CardView's shadow/clip machinery. -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="0dp"
-                app:cardBackgroundColor="@color/bv_tile_purple_bg">
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:background="@drawable/bg_tile_purple">
 
-                <LinearLayout
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
+                    android:text="@string/settings_section_safety"
+                    android:textColor="@color/bv_tile_purple_text_secondary"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="10dp" />
 
-                    <TextView
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switchSafeBrowsing"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_enable_safe_browsing"
+                    android:textColor="@color/bv_tile_purple_text" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_enable_safe_browsing_desc"
+                    android:textColor="@color/bv_tile_purple_text_secondary"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="8dp" />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/safeBrowsingKeyLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/settings_safe_browsing_key_hint"
+                    app:boxBackgroundColor="@color/bv_surface"
+                    app:endIconMode="password_toggle">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/safeBrowsingKeyInput"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/settings_section_safety"
-                        android:textColor="@color/bv_tile_purple_text_secondary"
-                        android:textSize="11sp"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="10dp" />
+                        android:inputType="textPassword" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.switchmaterial.SwitchMaterial
-                        android:id="@+id/switchSafeBrowsing"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/settings_enable_safe_browsing"
-                        android:textColor="@color/bv_tile_purple_text" />
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/settings_enable_safe_browsing_desc"
-                        android:textColor="@color/bv_tile_purple_text_secondary"
-                        android:textSize="12sp"
-                        android:layout_marginBottom="8dp" />
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/safeBrowsingKeyLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/settings_safe_browsing_key_hint"
-                        app:boxBackgroundColor="@color/bv_surface"
-                        app:endIconMode="password_toggle">
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/safeBrowsingKeyInput"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="textPassword" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginVertical="14dp"
+                    android:background="#33FFFFFF" />
 
-                    <View
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switchVirusTotal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_enable_virustotal"
+                    android:textColor="@color/bv_tile_purple_text" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_enable_virustotal_desc"
+                    android:textColor="@color/bv_tile_purple_text_secondary"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="8dp" />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/virusTotalKeyLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/settings_virustotal_key_hint"
+                    app:boxBackgroundColor="@color/bv_surface"
+                    app:endIconMode="password_toggle">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/virusTotalKeyInput"
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginVertical="14dp"
-                        android:background="#33FFFFFF" />
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.switchmaterial.SwitchMaterial
-                        android:id="@+id/switchVirusTotal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/settings_enable_virustotal"
-                        android:textColor="@color/bv_tile_purple_text" />
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/settings_enable_virustotal_desc"
-                        android:textColor="@color/bv_tile_purple_text_secondary"
-                        android:textSize="12sp"
-                        android:layout_marginBottom="8dp" />
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/virusTotalKeyLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/settings_virustotal_key_hint"
-                        app:boxBackgroundColor="@color/bv_surface"
-                        app:endIconMode="password_toggle">
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/virusTotalKeyInput"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="textPassword" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginVertical="14dp"
+                    android:background="#33FFFFFF" />
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginVertical="14dp"
-                        android:background="#33FFFFFF" />
-
-                    <com.google.android.material.switchmaterial.SwitchMaterial
-                        android:id="@+id/switchDomainAge"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/settings_enable_domain_age"
-                        android:textColor="@color/bv_tile_purple_text" />
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/settings_enable_domain_age_desc"
-                        android:textColor="@color/bv_tile_purple_text_secondary"
-                        android:textSize="12sp" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switchDomainAge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_enable_domain_age"
+                    android:textColor="@color/bv_tile_purple_text" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_enable_domain_age_desc"
+                    android:textColor="@color/bv_tile_purple_text_secondary"
+                    android:textSize="12sp" />
+            </LinearLayout>
 
             <!-- Appearance + History row -->
             <LinearLayout
@@ -139,171 +135,150 @@
                 android:orientation="horizontal"
                 android:layout_marginTop="10dp">
 
-                <androidx.cardview.widget.CardView
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:layout_marginEnd="5dp"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="0dp"
-                    app:cardBackgroundColor="@color/bv_tile_teal_bg">
+                    android:orientation="vertical"
+                    android:padding="14dp"
+                    android:background="@drawable/bg_tile_teal">
 
-                    <LinearLayout
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="14dp">
+                        android:text="@string/settings_section_appearance"
+                        android:textColor="@color/bv_tile_teal_text_secondary"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="8dp" />
 
-                        <TextView
-                            android:layout_width="match_parent"
+                    <com.google.android.material.button.MaterialButtonToggleGroup
+                        android:id="@+id/themeToggleGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:singleSelection="true"
+                        app:selectionRequired="true">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/themeSystemButton"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="@string/settings_section_appearance"
-                            android:textColor="@color/bv_tile_teal_text_secondary"
+                            android:layout_weight="1"
+                            android:insetTop="0dp"
+                            android:insetBottom="0dp"
+                            android:paddingHorizontal="0dp"
                             android:textSize="11sp"
-                            android:textStyle="bold"
-                            android:layout_marginBottom="8dp" />
+                            android:text="@string/theme_system" />
 
-                        <com.google.android.material.button.MaterialButtonToggleGroup
-                            android:id="@+id/themeToggleGroup"
-                            android:layout_width="match_parent"
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/themeLightButton"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            app:singleSelection="true"
-                            app:selectionRequired="true">
+                            android:layout_weight="1"
+                            android:insetTop="0dp"
+                            android:insetBottom="0dp"
+                            android:paddingHorizontal="0dp"
+                            android:textSize="11sp"
+                            android:text="@string/theme_light" />
 
-                            <com.google.android.material.button.MaterialButton
-                                android:id="@+id/themeSystemButton"
-                                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:insetTop="0dp"
-                                android:insetBottom="0dp"
-                                android:paddingHorizontal="0dp"
-                                android:textSize="11sp"
-                                android:text="@string/theme_system" />
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/themeDarkButton"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:insetTop="0dp"
+                            android:insetBottom="0dp"
+                            android:paddingHorizontal="0dp"
+                            android:textSize="11sp"
+                            android:text="@string/theme_dark" />
+                    </com.google.android.material.button.MaterialButtonToggleGroup>
+                </LinearLayout>
 
-                            <com.google.android.material.button.MaterialButton
-                                android:id="@+id/themeLightButton"
-                                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:insetTop="0dp"
-                                android:insetBottom="0dp"
-                                android:paddingHorizontal="0dp"
-                                android:textSize="11sp"
-                                android:text="@string/theme_light" />
-
-                            <com.google.android.material.button.MaterialButton
-                                android:id="@+id/themeDarkButton"
-                                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:insetTop="0dp"
-                                android:insetBottom="0dp"
-                                android:paddingHorizontal="0dp"
-                                android:textSize="11sp"
-                                android:text="@string/theme_dark" />
-                        </com.google.android.material.button.MaterialButtonToggleGroup>
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:layout_marginStart="5dp"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="0dp"
-                    app:cardBackgroundColor="@color/bv_tile_coral_bg">
+                    android:orientation="vertical"
+                    android:padding="14dp"
+                    android:background="@drawable/bg_tile_coral">
 
-                    <LinearLayout
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="14dp">
+                        android:text="@string/settings_section_general"
+                        android:textColor="@color/bv_tile_coral_text"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="6dp" />
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/settings_section_general"
-                            android:textColor="@color/bv_tile_coral_text"
-                            android:textSize="11sp"
-                            android:textStyle="bold"
-                            android:layout_marginBottom="6dp" />
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/switchSaveHistory"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_save_history"
+                        android:textSize="12sp"
+                        android:textColor="@color/bv_tile_coral_text" />
 
-                        <com.google.android.material.switchmaterial.SwitchMaterial
-                            android:id="@+id/switchSaveHistory"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/settings_save_history"
-                            android:textSize="12sp"
-                            android:textColor="@color/bv_tile_coral_text" />
-
-                        <TextView
-                            android:id="@+id/clearHistoryButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:text="@string/settings_clear_history"
-                            android:textColor="@color/bv_tile_coral_text"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
+                    <TextView
+                        android:id="@+id/clearHistoryButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/settings_clear_history"
+                        android:textColor="@color/bv_tile_coral_text"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
             </LinearLayout>
 
             <!-- About tile -->
-            <androidx.cardview.widget.CardView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="0dp"
-                app:cardBackgroundColor="@color/bv_surface">
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:background="@drawable/bg_tile_surface">
 
-                <LinearLayout
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
+                    android:text="@string/app_name"
+                    android:textColor="@color/bv_text_primary"
+                    android:textStyle="bold"
+                    android:textSize="15sp" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/app_name"
-                        android:textColor="@color/bv_text_primary"
-                        android:textStyle="bold"
-                        android:textSize="15sp" />
+                <TextView
+                    android:id="@+id/versionText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:textColor="@color/bv_text_secondary"
+                    android:textSize="12sp" />
 
-                    <TextView
-                        android:id="@+id/versionText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:textColor="@color/bv_text_secondary"
-                        android:textSize="12sp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/about_tagline"
+                    android:textColor="@color/bv_text_secondary"
+                    android:textSize="13sp" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="@string/about_tagline"
-                        android:textColor="@color/bv_text_secondary"
-                        android:textSize="13sp" />
-
-                    <TextView
-                        android:id="@+id/sourceLinkText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
-                        android:text="@string/about_source_link"
-                        android:textColor="@color/bv_purple"
-                        android:textSize="13sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
+                <TextView
+                    android:id="@+id/sourceLinkText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:text="@string/about_source_link"
+                    android:textColor="@color/bv_purple"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
             <!-- Other: 2-column icon tile grid -->
             <TextView
