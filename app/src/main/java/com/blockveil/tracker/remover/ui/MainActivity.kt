@@ -18,13 +18,15 @@ import com.blockveil.tracker.remover.TrackerRemoverApp
 import com.blockveil.tracker.remover.databinding.ActivityMainBinding
 import com.blockveil.tracker.remover.safety.Verdict
 import com.blockveil.tracker.remover.util.LinkProcessor
+import com.blockveil.tracker.remover.util.NetworkUtils
+import com.blockveil.tracker.remover.util.trackerCount
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private var currentCleanedUrl: String? = null
-    private val recentAdapter = HistoryAdapter()
+    private val recentAdapter = HistoryAdapter { entity -> HistoryDetailActivity.launch(this, entity) }
 
     private val app: TrackerRemoverApp by lazy { application as TrackerRemoverApp }
 
@@ -56,18 +58,20 @@ class MainActivity : AppCompatActivity() {
         binding.linkInput.doOnTextChanged { _, _, _, _ -> binding.resultCard.visibility = android.view.View.GONE }
 
         observeRecentHistory()
-        observeStats()
+        refreshStats()
     }
 
-    /** Keeps the two bento stat tiles (links cleaned, trackers blocked) live. */
-    private fun observeStats() {
-        val dao = app.database.cleanedLinkDao()
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch { dao.observeCount().collect { binding.statLinksCountText.text = it.toString() } }
-                launch { dao.observeTotalTrackersRemoved().collect { binding.statTrackersCountText.text = it.toString() } }
-            }
-        }
+    override fun onResume() {
+        super.onResume()
+        // Covers the case where a link was cleaned elsewhere (e.g. the
+        // instant share-and-reshare flow) while this screen was paused.
+        refreshStats()
+    }
+
+    /** Reads the two lifetime counters (links cleaned, trackers removed) into the bento stat tiles. */
+    private fun refreshStats() {
+        binding.statLinksCountText.text = app.settings.totalLinksCleaned.toString()
+        binding.statTrackersCountText.text = app.settings.totalTrackersRemoved.toString()
     }
 
     /** Keeps the "Recent" strip on the main screen in sync with history, only while visible. */
@@ -100,6 +104,10 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, R.string.empty_input_error, Toast.LENGTH_SHORT).show()
             return
         }
+        if (!NetworkUtils.isOnline(this)) {
+            Toast.makeText(this, R.string.no_internet_error, Toast.LENGTH_LONG).show()
+            return
+        }
 
         setLoading(true, R.string.label_resolving)
 
@@ -111,8 +119,11 @@ class MainActivity : AppCompatActivity() {
                 }
                 is LinkProcessor.ProcessResult.Success -> {
                     if (app.settings.saveHistory) {
-                        app.database.cleanedLinkDao().insert(LinkProcessor.toEntity(result.link))
+                        val entity = LinkProcessor.toEntity(result.link, getString(R.string.label_short_url_resolved))
+                        app.database.cleanedLinkDao().insert(entity)
                     }
+                    app.settings.recordCleanedLink(result.link.trackerCount)
+                    refreshStats()
                     setLoading(false)
                     showResult(result.link)
                 }
@@ -132,8 +143,7 @@ class MainActivity : AppCompatActivity() {
         binding.resultCard.visibility = android.view.View.VISIBLE
         binding.cleanedUrlText.text = link.cleaned
 
-        val displayItems = link.removedParams.toMutableList()
-        if (link.wasShortenerResolved) displayItems.add(getString(R.string.label_short_url_resolved))
+        val displayItems = LinkProcessor.displayTrackerNames(link, getString(R.string.label_short_url_resolved))
 
         binding.removedParamsText.text = if (displayItems.isEmpty()) {
             getString(R.string.label_no_trackers)
