@@ -77,12 +77,22 @@ object LinkProcessor {
             )
         }
 
-    fun toEntity(link: ProcessedLink): CleanedLinkEntity = CleanedLinkEntity(
+    /** The full list shown to the user: tracker param names, plus the shortener note if resolved. */
+    fun displayTrackerNames(link: ProcessedLink, shortUrlResolvedLabel: String): List<String> =
+        if (link.wasShortenerResolved) link.removedParams + shortUrlResolvedLabel else link.removedParams
+
+    fun toEntity(link: ProcessedLink, shortUrlResolvedLabel: String): CleanedLinkEntity = CleanedLinkEntity(
         original = link.original,
         cleaned = link.cleaned,
         domain = link.domain,
-        removedParamsCount = link.removedParams.size + if (link.wasShortenerResolved) 1 else 0,
+        removedParamsCount = link.trackerCount,
+        removedParamsNames = displayTrackerNames(link, shortUrlResolvedLabel).joinToString(","),
+        description = link.trackerDescription,
         verdict = (link.safety?.verdict ?: Verdict.UNKNOWN).name,
         timestampMillis = System.currentTimeMillis()
     )
 }
+
+/** removedParams count, plus one more if a shortener redirect was also resolved. */
+val LinkProcessor.ProcessedLink.trackerCount: Int
+    get() = removedParams.size + if (wasShortenerResolved) 1 else 0
