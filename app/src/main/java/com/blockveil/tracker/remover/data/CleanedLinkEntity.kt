@@ -17,4 +17,3 @@ data class CleanedLinkEntity(
     val verdict: String, // stores Verdict.name, e.g. "SAFE" / "UNKNOWN"
     val timestampMillis: Long
 )
-l
