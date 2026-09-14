@@ -16,10 +16,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.blockveil.tracker.remover.R
 import com.blockveil.tracker.remover.TrackerRemoverApp
 import com.blockveil.tracker.remover.databinding.ActivityMainBinding
+import com.blockveil.tracker.remover.safety.SafetyChecker
 import com.blockveil.tracker.remover.safety.Verdict
 import com.blockveil.tracker.remover.util.LinkProcessor
 import com.blockveil.tracker.remover.util.NetworkUtils
-import com.blockveil.tracker.remover.util.trackerCount
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -118,11 +118,13 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this@MainActivity, R.string.no_link_found_error, Toast.LENGTH_SHORT).show()
                 }
                 is LinkProcessor.ProcessResult.Success -> {
+                    val labels = resolutionLabels()
+                    val displayNames = LinkProcessor.displayTrackerNames(result.link, labels)
                     if (app.settings.saveHistory) {
-                        val entity = LinkProcessor.toEntity(result.link, getString(R.string.label_short_url_resolved))
+                        val entity = LinkProcessor.toEntity(result.link, labels)
                         app.database.cleanedLinkDao().insert(entity)
                     }
-                    app.settings.recordCleanedLink(result.link.trackerCount)
+                    app.settings.recordCleanedLink(displayNames.size)
                     refreshStats()
                     setLoading(false)
                     showResult(result.link)
@@ -138,12 +140,19 @@ class MainActivity : AppCompatActivity() {
         binding.cleanButton.isEnabled = !loading
     }
 
+    private fun resolutionLabels() = LinkProcessor.ResolutionLabels(
+        shortUrlResolved = getString(R.string.label_short_url_resolved),
+        shortUrlFailed = getString(R.string.label_short_url_failed),
+        ampResolved = getString(R.string.label_amp_resolved),
+        ampFailed = getString(R.string.label_amp_failed)
+    )
+
     private fun showResult(link: LinkProcessor.ProcessedLink) {
         currentCleanedUrl = link.cleaned
         binding.resultCard.visibility = android.view.View.VISIBLE
         binding.cleanedUrlText.text = link.cleaned
 
-        val displayItems = LinkProcessor.displayTrackerNames(link, getString(R.string.label_short_url_resolved))
+        val displayItems = LinkProcessor.displayTrackerNames(link, resolutionLabels())
 
         binding.removedParamsText.text = if (displayItems.isEmpty()) {
             getString(R.string.label_no_trackers)
@@ -151,16 +160,19 @@ class MainActivity : AppCompatActivity() {
             getString(R.string.label_removed_params, displayItems.size) + ": " + displayItems.joinToString(", ")
         }
 
-        if (link.trackerDescription.isNullOrBlank()) {
+        val safety = link.safety
+        val safetyDescription = if (safety != null) SafetyChecker.describeSafety(safety, link.domain) else emptyList()
+        val combinedDescription = listOfNotNull(link.trackerDescription) + safetyDescription
+
+        if (combinedDescription.isEmpty()) {
             binding.descriptionLabel.visibility = android.view.View.GONE
             binding.descriptionText.visibility = android.view.View.GONE
         } else {
             binding.descriptionLabel.visibility = android.view.View.VISIBLE
             binding.descriptionText.visibility = android.view.View.VISIBLE
-            binding.descriptionText.text = link.trackerDescription
+            binding.descriptionText.text = combinedDescription.joinToString(" ")
         }
 
-        val safety = link.safety
         if (safety == null) {
             binding.safetyBadge.visibility = android.view.View.GONE
             binding.safetyReasonsText.visibility = android.view.View.GONE
@@ -168,11 +180,11 @@ class MainActivity : AppCompatActivity() {
             binding.safetyBadge.visibility = android.view.View.VISIBLE
             val (labelRes, colorRes) = when (safety.verdict) {
                 Verdict.SAFE -> R.string.safety_safe to R.color.bv_safe
-                Verdict.SUSPICIOUS -> R.string.safety_suspicious to R.color.bv_suspicious
-                Verdict.MALICIOUS -> R.string.safety_malicious to R.color.bv_malicious
+                Verdict.CAUTION -> R.string.safety_caution to R.color.bv_suspicious
+                Verdict.UNSAFE -> R.string.safety_unsafe to R.color.bv_malicious
                 Verdict.UNKNOWN -> R.string.safety_unknown to R.color.bv_unknown
             }
-            binding.safetyBadge.text = getString(labelRes)
+            binding.safetyBadge.text = "${getString(labelRes)} (${safety.score}/100)"
             binding.safetyBadge.setBackgroundColor(getColor(colorRes))
 
             if (safety.reasons.isEmpty()) {
