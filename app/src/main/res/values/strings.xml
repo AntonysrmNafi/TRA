@@ -63,12 +63,13 @@
     <string name="theme_light">Light</string>
     <string name="theme_dark">Dark</string>
 
-    <string name="settings_section_about">About</string>
     <string name="about_tagline">Cleans tracking parameters from links and checks link safety, entirely on this device.</string>
     <string name="about_version">Version %1$s</string>
-    <string name="about_source_link">View source on GitHub</string>
 
     <string name="settings_section_other">Other</string>
+    <string name="other_about_title">About</string>
+    <string name="other_about_desc">App info and version</string>
+    <string name="source_not_released_message">The source code hasn\'t been publicly released yet.</string>
 
     <string name="other_feedback_title">Feedback</string>
     <string name="other_feedback_desc">Send an email with feedback</string>
