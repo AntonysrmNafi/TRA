@@ -14,7 +14,7 @@
         android:background="@color/bv_purple"
         android:title="@string/history_title"
         android:titleTextColor="@color/white"
-        app:navigationIcon="@android:drawable/ic_menu_close_clear_cancel" />
+        app:navigationIcon="@drawable/ic_back" />
 
     <FrameLayout
         android:layout_width="match_parent"
