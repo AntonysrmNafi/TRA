@@ -10,7 +10,6 @@ import com.blockveil.tracker.remover.TrackerRemoverApp
 import com.blockveil.tracker.remover.databinding.ActivityShareCleanBinding
 import com.blockveil.tracker.remover.util.LinkProcessor
 import com.blockveil.tracker.remover.util.NetworkUtils
-import com.blockveil.tracker.remover.util.trackerCount
 import kotlinx.coroutines.launch
 
 /**
@@ -58,11 +57,18 @@ class ShareCleanActivity : AppCompatActivity() {
                     Toast.makeText(this@ShareCleanActivity, R.string.share_clean_no_link, Toast.LENGTH_SHORT).show()
                 }
                 is LinkProcessor.ProcessResult.Success -> {
+                    val labels = LinkProcessor.ResolutionLabels(
+                        shortUrlResolved = getString(R.string.label_short_url_resolved),
+                        shortUrlFailed = getString(R.string.label_short_url_failed),
+                        ampResolved = getString(R.string.label_amp_resolved),
+                        ampFailed = getString(R.string.label_amp_failed)
+                    )
+                    val displayNames = LinkProcessor.displayTrackerNames(result.link, labels)
                     if (app.settings.saveHistory) {
-                        val entity = LinkProcessor.toEntity(result.link, getString(R.string.label_short_url_resolved))
+                        val entity = LinkProcessor.toEntity(result.link, labels)
                         app.database.cleanedLinkDao().insert(entity)
                     }
-                    app.settings.recordCleanedLink(result.link.trackerCount)
+                    app.settings.recordCleanedLink(displayNames.size)
                     reshare(result.link.cleaned)
                 }
             }
