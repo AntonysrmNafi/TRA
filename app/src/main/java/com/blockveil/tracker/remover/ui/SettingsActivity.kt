@@ -51,8 +51,6 @@ class SettingsActivity : AppCompatActivity() {
             else -> R.id.themeSystemButton
         }
         binding.themeToggleGroup.check(themeButtonId)
-
-        binding.versionText.text = getString(R.string.about_version, BuildConfig.VERSION_NAME)
     }
 
     private fun wireListeners() {
@@ -93,11 +91,9 @@ class SettingsActivity : AppCompatActivity() {
             ThemeMode.apply(mode)
         }
 
-        binding.sourceLinkText.setOnClickListener { openUrl(AppLinks.SOURCE_URL) }
-
         binding.feedbackRow.setOnClickListener { openFeedbackEmail() }
         binding.donateRow.setOnClickListener { openUrl(AppLinks.DONATE_URL) }
-        binding.sourceCodeRow.setOnClickListener { openUrl(AppLinks.SOURCE_URL) }
+        binding.sourceCodeRow.setOnClickListener { showSourceNotReleasedDialog() }
 
         binding.dataCollectionRow.setOnClickListener {
             TextDocumentActivity.launch(
@@ -120,6 +116,21 @@ class SettingsActivity : AppCompatActivity() {
                 getString(R.string.terms_content)
             )
         }
+        binding.aboutRow.setOnClickListener { showAbout() }
+    }
+
+    private fun showAbout() {
+        val content = getString(R.string.about_version, BuildConfig.VERSION_NAME) +
+            "\n\n" + getString(R.string.about_tagline)
+        TextDocumentActivity.launch(this, getString(R.string.app_name), content)
+    }
+
+    private fun showSourceNotReleasedDialog() {
+        AlertDialog.Builder(this)
+            .setTitle(R.string.other_source_title)
+            .setMessage(R.string.source_not_released_message)
+            .setPositiveButton(android.R.string.ok, null)
+            .show()
     }
 
     private fun openUrl(url: String) {
