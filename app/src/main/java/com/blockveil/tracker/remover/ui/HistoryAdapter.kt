@@ -34,11 +34,11 @@ class HistoryAdapter(
             val verdict = runCatching { Verdict.valueOf(item.verdict) }.getOrDefault(Verdict.UNKNOWN)
             val (label, colorAttr) = when (verdict) {
                 Verdict.SAFE -> "Safe" to com.blockveil.tracker.remover.R.color.bv_safe
-                Verdict.SUSPICIOUS -> "Suspicious" to com.blockveil.tracker.remover.R.color.bv_suspicious
-                Verdict.MALICIOUS -> "Unsafe" to com.blockveil.tracker.remover.R.color.bv_malicious
+                Verdict.CAUTION -> "Caution" to com.blockveil.tracker.remover.R.color.bv_suspicious
+                Verdict.UNSAFE -> "Unsafe" to com.blockveil.tracker.remover.R.color.bv_malicious
                 Verdict.UNKNOWN -> "Not checked" to com.blockveil.tracker.remover.R.color.bv_unknown
             }
-            binding.verdictBadge.text = label
+            binding.verdictBadge.text = if (item.safetyScore != null) "$label (${item.safetyScore}/100)" else label
             binding.verdictBadge.setBackgroundColor(binding.root.context.getColor(colorAttr))
 
             val when_ = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT)
