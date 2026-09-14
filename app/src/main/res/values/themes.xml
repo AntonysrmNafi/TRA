@@ -10,7 +10,10 @@
 
     <!-- Used by ShareCleanActivity: a fully invisible window (no dim, no
          animation, nothing drawn) so selecting this app from another app's
-         Share sheet never visibly looks like switching apps. -->
+         Share sheet never visibly looks like switching apps. Status/nav bar
+         colors are explicitly transparent too — without this, the status
+         bar picks up colorPrimary from the parent theme and shows as a
+         visible colored strip even though everything else is invisible. -->
     <style name="Theme.TrackerRemover.Transparent" parent="Theme.TrackerRemover">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -18,6 +21,9 @@
         <item name="android:windowAnimationStyle">@null</item>
         <item name="android:backgroundDimEnabled">false</item>
         <item name="android:windowDisablePreview">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>
 
     <!-- Settings > Other grid tile styles: icon-over-label tappable tile. -->
