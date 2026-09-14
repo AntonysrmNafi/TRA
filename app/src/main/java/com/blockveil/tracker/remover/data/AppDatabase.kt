@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [CleanedLinkEntity::class], version = 2, exportSchema = false)
+@Database(entities = [CleanedLinkEntity::class], version = 3, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun cleanedLinkDao(): CleanedLinkDao
@@ -20,10 +20,11 @@ abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java,
                     "tracker_remover.db"
                 )
-                    // Schema changed (added removedParamsNames/description columns) and
-                    // there's no shipped release depending on the old schema yet, so a
-                    // destructive fallback is simpler than a hand-written migration.
-                    // This clears any history saved under the previous version.
+                    // Schema changed (added removedParamsNames/description/safetyScore
+                    // columns over time) and there's no shipped release depending on
+                    // the old schema yet, so a destructive fallback is simpler than a
+                    // hand-written migration. This clears any history saved under a
+                    // previous version.
                     .fallbackToDestructiveMigration()
                     .build()
                     .also { instance = it }
