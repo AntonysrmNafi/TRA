@@ -57,7 +57,13 @@ object TrackingRules {
         ),
         PlatformRule(
             domains = setOf("instagram.com", "instagr.am"),
-            params = setOf("igsh", "igshid")
+            // Instagram rotates its share-attribution param name over time
+            // (igshid -> igsh -> stkn as of late 2026) to dodge tracker
+            // strippers, so this needs occasional updates. Deliberately does
+            // NOT touch "img_index" — that's which photo in a carousel post
+            // to open, not tracking, and stripping it would change what the
+            // recipient actually sees.
+            params = setOf("igsh", "igshid", "stkn")
         ),
         PlatformRule(
             domains = setOf("tiktok.com", "vm.tiktok.com", "vt.tiktok.com"),
@@ -237,7 +243,7 @@ object TrackingRules {
     )
     private val CROSS_SITE_TRACKERS = setOf("_ga", "_gl")
     private val SHARE_TRACE_TRACKERS = setOf(
-        "igsh", "igshid", "si", "sfnsn", "mibextid", "share_url", "xmt",
+        "igsh", "igshid", "stkn", "si", "sfnsn", "mibextid", "share_url", "xmt",
         "__tn__", "refsrc", "source", "extid", "fb_source", "fb_ref"
     )
 
