@@ -6,6 +6,11 @@
         <item name="colorAccent">@color/bv_purple</item>
         <item name="android:windowBackground">@color/bv_bg</item>
         <item name="colorOnPrimary">@color/white</item>
+        <!-- Matches the toolbar's own background color exactly, rather than
+             the default colorPrimaryDark, so the status bar and toolbar
+             read as one seamless purple bar instead of two visibly
+             different shades stacked on top of each other. -->
+        <item name="android:statusBarColor">@color/bv_purple</item>
     </style>
 
     <!-- Used by ShareCleanActivity: a fully invisible window (no dim, no
