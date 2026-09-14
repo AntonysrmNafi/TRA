@@ -14,6 +14,7 @@ data class CleanedLinkEntity(
     val removedParamsNames: String,
     /** The "why this matters" plain-language sentence, or null if there was nothing to say. */
     val description: String?,
-    val verdict: String, // stores Verdict.name, e.g. "SAFE" / "UNKNOWN"
+    val verdict: String, // stores Verdict.name, e.g. "SAFE" / "CAUTION" / "UNSAFE" / "UNKNOWN"
+    val safetyScore: Int?, // 0-100, null if no safety check ran at all
     val timestampMillis: Long
 )
