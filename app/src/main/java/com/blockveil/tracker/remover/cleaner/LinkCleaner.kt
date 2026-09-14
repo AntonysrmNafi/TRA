@@ -16,13 +16,54 @@ object LinkCleaner {
         RegexOption.IGNORE_CASE
     )
 
+    enum class ResolutionKind { NONE, SHORTENER, AMP }
+
     data class CleanedUrl(
         val original: String,
         val cleaned: String,
         val removedParams: List<String>,
-        val domain: String,
-        val isShortener: Boolean
+        val domain: String
     )
+
+    /**
+     * Mirrors the bot's process_url resolution decision:
+     *  - a Google AMP viewer URL embeds the real destination in its own
+     *    path, so it can be reconstructed with no network call at all
+     *  - a confirmed shortener (curated domain list, or a Facebook
+     *    /share/... wrapper path), or something that just looks like an
+     *    unrecognized shortlink, needs a real fetch to resolve
+     *  - a Google AMP Cache link or bare ".amp.html" page also needs a
+     *    real fetch — the real URL is only found via the page's own
+     *    canonical link, not embedded in the URL itself
+     */
+    data class ResolutionDecision(
+        val kind: ResolutionKind,
+        /** True only for a *confirmed* shortener/wrapper, not just the generic short-path guess. */
+        val confirmedShortener: Boolean,
+        /** Set only when the real URL could be reconstructed with no network call (AMP viewer). */
+        val directResolvedUrl: String?
+    )
+
+    fun decideResolution(url: String): ResolutionDecision {
+        val uri = runCatching { URI(url) }.getOrNull()
+            ?: return ResolutionDecision(ResolutionKind.NONE, confirmedShortener = false, directResolvedUrl = null)
+
+        val host = (uri.host ?: "").lowercase().removePrefix("www.")
+        val path = uri.path.orEmpty()
+        val hasQuery = !uri.rawQuery.isNullOrEmpty()
+
+        val confirmedShortener = TrackingRules.isKnownShortener(host, path)
+        val ampDirect = TrackingRules.unwrapGoogleAmpViewer(host, path, uri.rawQuery)
+
+        return when {
+            ampDirect != null -> ResolutionDecision(ResolutionKind.AMP, confirmedShortener, ampDirect)
+            confirmedShortener || TrackingRules.looksLikeUnknownShortlink(host, path, hasQuery) ->
+                ResolutionDecision(ResolutionKind.SHORTENER, confirmedShortener, directResolvedUrl = null)
+            TrackingRules.isAmpUrl(host, path) ->
+                ResolutionDecision(ResolutionKind.AMP, confirmedShortener, directResolvedUrl = null)
+            else -> ResolutionDecision(ResolutionKind.NONE, confirmedShortener, directResolvedUrl = null)
+        }
+    }
 
     /** Pulls out the first http(s) URL found in free-form text, or null. */
     fun extractFirstUrl(text: String): String? {
@@ -48,25 +89,26 @@ object LinkCleaner {
     fun clean(rawUrl: String): CleanedUrl {
         val url = ensureScheme(stripTrailingPunctuation(rawUrl.trim()))
         val uri = runCatching { URI(url) }.getOrNull()
-            ?: return CleanedUrl(rawUrl, rawUrl, emptyList(), "", false)
+            ?: return CleanedUrl(rawUrl, rawUrl, emptyList(), "")
 
         val host = (uri.host ?: "").lowercase().removePrefix("www.")
         val rule = TrackingRules.PLATFORM_RULES.firstOrNull { platformRule ->
             platformRule.domains.any { it == host || host.endsWith(".$it") }
         }
+        val platformParams = rule?.params.orEmpty().map { it.lowercase() }.toSet()
 
         val removed = mutableListOf<String>()
         val keptParams = mutableListOf<Pair<String, String>>()
 
         for (param in parseQuery(uri.rawQuery)) {
             val key = param.first
-            val isGenericTracker = key in TrackingRules.GENERIC_EXACT ||
-                TrackingRules.GENERIC_PREFIX.any { key.startsWith(it) }
-            val isPlatformTracker = rule?.params?.contains(key) == true ||
-                (rule?.params?.any { it.endsWith("_") && key.startsWith(it) } == true)
+            val keyLower = key.lowercase()
+            val isGenericTracker = keyLower in TrackingRules.GENERIC_EXACT ||
+                TrackingRules.GENERIC_PREFIX.any { keyLower.startsWith(it) }
+            val isPlatformTracker = keyLower in platformParams
 
             if (isGenericTracker || isPlatformTracker) {
-                removed.add(key)
+                removed.add(key) // keep original casing in what's shown to the user
             } else {
                 keptParams.add(param)
             }
@@ -76,6 +118,10 @@ object LinkCleaner {
             if (v.isEmpty()) k else "$k=$v"
         }
         val dropFragment = rule?.dropFragment == true
+        val hadFragment = !uri.rawFragment.isNullOrEmpty()
+        if (dropFragment && hadFragment) {
+            removed.add("fragment")
+        }
         val fragment = if (dropFragment) null else uri.rawFragment
 
         val cleaned = buildString {
@@ -89,8 +135,7 @@ object LinkCleaner {
             original = rawUrl,
             cleaned = cleaned,
             removedParams = removed,
-            domain = host,
-            isShortener = TrackingRules.SHORTENER_DOMAINS.any { host == it || host.endsWith(".$it") }
+            domain = host
         )
     }
 
@@ -119,9 +164,14 @@ object LinkCleaner {
      * grouped by tracker category — same wording as the bot's
      * describe_removed_trackers(). Returns null if there's nothing to say.
      */
-    fun describeRemovedTrackers(removedParams: List<String>, wasShortenerResolved: Boolean): String? {
+    fun describeRemovedTrackers(
+        removedParams: List<String>,
+        wasRedirected: Boolean,
+        resolutionKind: ResolutionKind
+    ): String? {
         val categoriesFound = LinkedHashSet<TrackingRules.TrackerCategory>()
         for (param in removedParams) {
+            if (param == "fragment") continue
             categoriesFound.add(TrackingRules.categorize(param))
         }
 
@@ -136,8 +186,10 @@ object LinkCleaner {
             sentence.append("The original link carried ").append(joined).append(". ")
         }
 
-        if (wasShortenerResolved) {
-            sentence.append("It was also a shortened link hiding its real destination until it was resolved.")
+        if (wasRedirected) {
+            val kindLabel = if (resolutionKind == ResolutionKind.AMP) "an AMP proxy link" else "a shortened link"
+            sentence.append("It was also ").append(kindLabel)
+                .append(" hiding its real destination until it was resolved.")
         }
 
         val result = sentence.toString().trim()
