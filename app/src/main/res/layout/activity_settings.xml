@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
     android:background="@color/bv_bg">
 
@@ -236,50 +237,6 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- About tile -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="vertical"
-                android:padding="16dp"
-                android:background="@drawable/bg_tile_surface">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/app_name"
-                    android:textColor="@color/bv_text_primary"
-                    android:textStyle="bold"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/versionText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:textColor="@color/bv_text_secondary"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/about_tagline"
-                    android:textColor="@color/bv_text_secondary"
-                    android:textSize="13sp" />
-
-                <TextView
-                    android:id="@+id/sourceLinkText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
-                    android:text="@string/about_source_link"
-                    android:textColor="@color/bv_purple"
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
             <!-- Other: 2-column icon tile grid -->
             <TextView
                 android:layout_width="wrap_content"
@@ -357,6 +314,28 @@
                     <ImageView style="@style/OtherGridTileIcon" android:src="@drawable/ic_terms" app:tint="@color/bv_icon_amber" android:contentDescription="@string/other_terms_desc" />
                     <TextView style="@style/OtherGridTileLabel" android:text="@string/other_terms_title" />
                 </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/aboutRow"
+                    style="@style/OtherGridTile"
+                    android:layout_marginEnd="5dp">
+                    <ImageView style="@style/OtherGridTileIcon" android:src="@drawable/ic_about" app:tint="@color/bv_purple" android:contentDescription="@string/other_about_desc" />
+                    <TextView style="@style/OtherGridTileLabel" android:text="@string/other_about_title" />
+                </LinearLayout>
+
+                <!-- Empty spacer so the odd 7th tile keeps the same width as the rest, not stretched full-width. -->
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="5dp" />
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
