@@ -27,14 +27,22 @@
         <!-- The Share-sheet target: cleans the link and immediately
              re-opens the Share sheet with the result. See ShareCleanActivity
              for why this is a separate, near-invisible activity rather than
-             part of MainActivity. -->
+             part of MainActivity.
+
+             taskAffinity is deliberately its own distinct string (not the
+             app's default): without this, if MainActivity was already
+             running in the background from an earlier session, Android
+             would reuse that same task for this activity too — bringing
+             the whole task, MainActivity included, to the foreground
+             instead of staying invisible. -->
         <activity
             android:name=".ui.ShareCleanActivity"
             android:exported="true"
             android:theme="@style/Theme.TrackerRemover.Transparent"
             android:excludeFromRecents="true"
             android:noHistory="true"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:taskAffinity="com.blockveil.tracker.remover.sharetask">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
                 <category android:name="android.intent.category.DEFAULT" />
