@@ -30,6 +30,7 @@ class HistoryDetailActivity : AppCompatActivity() {
         val description = intent.getStringExtra(EXTRA_DESCRIPTION)
         val verdict = runCatching { Verdict.valueOf(intent.getStringExtra(EXTRA_VERDICT).orEmpty()) }
             .getOrDefault(Verdict.UNKNOWN)
+        val safetyScore = intent.getIntExtra(EXTRA_SAFETY_SCORE, -1).takeIf { it >= 0 }
         val timestampMillis = intent.getLongExtra(EXTRA_TIMESTAMP, 0L)
 
         binding.toolbar.title = domain.ifBlank { getString(R.string.history_title) }
@@ -38,11 +39,15 @@ class HistoryDetailActivity : AppCompatActivity() {
 
         val (verdictLabelRes, verdictColorRes) = when (verdict) {
             Verdict.SAFE -> R.string.safety_safe to R.color.bv_safe
-            Verdict.SUSPICIOUS -> R.string.safety_suspicious to R.color.bv_suspicious
-            Verdict.MALICIOUS -> R.string.safety_malicious to R.color.bv_malicious
+            Verdict.CAUTION -> R.string.safety_caution to R.color.bv_suspicious
+            Verdict.UNSAFE -> R.string.safety_unsafe to R.color.bv_malicious
             Verdict.UNKNOWN -> R.string.safety_unknown to R.color.bv_unknown
         }
-        binding.verdictBadge.text = getString(verdictLabelRes)
+        binding.verdictBadge.text = if (safetyScore != null) {
+            "${getString(verdictLabelRes)} ($safetyScore/100)"
+        } else {
+            getString(verdictLabelRes)
+        }
         binding.verdictBadge.setBackgroundColor(getColor(verdictColorRes))
 
         binding.removedParamsText.text = if (trackerCount == 0) {
@@ -72,6 +77,7 @@ class HistoryDetailActivity : AppCompatActivity() {
         private const val EXTRA_TRACKER_COUNT = "extra_tracker_count"
         private const val EXTRA_DESCRIPTION = "extra_description"
         private const val EXTRA_VERDICT = "extra_verdict"
+        private const val EXTRA_SAFETY_SCORE = "extra_safety_score"
         private const val EXTRA_TIMESTAMP = "extra_timestamp"
 
         fun launch(context: Context, entity: CleanedLinkEntity) {
@@ -84,6 +90,7 @@ class HistoryDetailActivity : AppCompatActivity() {
                     .putExtra(EXTRA_TRACKER_COUNT, entity.removedParamsCount)
                     .putExtra(EXTRA_DESCRIPTION, entity.description)
                     .putExtra(EXTRA_VERDICT, entity.verdict)
+                    .apply { entity.safetyScore?.let { putExtra(EXTRA_SAFETY_SCORE, it) } }
                     .putExtra(EXTRA_TIMESTAMP, entity.timestampMillis)
             )
         }
