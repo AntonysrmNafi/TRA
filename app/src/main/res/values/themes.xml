@@ -10,7 +10,7 @@
              the default colorPrimaryDark, so the status bar and toolbar
              read as one seamless purple bar instead of two visibly
              different shades stacked on top of each other. -->
-        <item name="android:statusBarColor">@color/bv_purple</item>
+        <item name="android:statusBarColor">@color/black</item>
     </style>
 
     <!-- Used by ShareCleanActivity: a fully invisible window (no dim, no
