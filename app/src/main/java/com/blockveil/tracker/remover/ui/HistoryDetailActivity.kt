@@ -8,7 +8,6 @@ import com.blockveil.tracker.remover.R
 import com.blockveil.tracker.remover.data.CleanedLinkEntity
 import com.blockveil.tracker.remover.databinding.ActivityHistoryDetailBinding
 import com.blockveil.tracker.remover.safety.Verdict
-import com.blockveil.tracker.remover.util.hideStatusBar
 import java.text.DateFormat
 import java.util.Date
 
@@ -19,7 +18,6 @@ class HistoryDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        hideStatusBar()
         binding = ActivityHistoryDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.toolbar.setNavigationOnClickListener { finish() }
