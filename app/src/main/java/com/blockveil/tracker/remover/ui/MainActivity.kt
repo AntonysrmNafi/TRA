@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
@@ -20,6 +21,7 @@ import com.blockveil.tracker.remover.safety.SafetyChecker
 import com.blockveil.tracker.remover.safety.Verdict
 import com.blockveil.tracker.remover.util.LinkProcessor
 import com.blockveil.tracker.remover.util.NetworkUtils
+import com.blockveil.tracker.remover.util.hideStatusBar
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -32,8 +34,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        hideStatusBar()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Focus the input and pop the keyboard right away, so the app is
+        // ready to paste into the moment it opens.
+        binding.linkInput.requestFocus()
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
 
         binding.cleanButton.setOnClickListener { cleanCurrentInput() }
         binding.copyButton.setOnClickListener { copyResult() }
