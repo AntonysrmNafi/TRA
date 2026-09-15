@@ -21,8 +21,13 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+      # No separate Android SDK setup step: ubuntu-latest already ships a
+      # working Android SDK (this is what earlier successful steps in this
+      # workflow build against). The android-actions/setup-android action
+      # was tried here at one point, but it fails outright — it tries to
+      # install the legacy "tools" package, which Google has removed from
+      # the SDK repository, so the whole step errors before anything else
+      # even runs. Simpler and more reliable to just use what's preinstalled.
 
       # No gradlew is checked into this repo, so this step installs Gradle
       # itself and caches it between runs, then generates the wrapper
