@@ -13,7 +13,6 @@ import com.blockveil.tracker.remover.R
 import com.blockveil.tracker.remover.TrackerRemoverApp
 import com.blockveil.tracker.remover.data.CleanedLinkEntity
 import com.blockveil.tracker.remover.databinding.ActivityHistoryBinding
-import com.blockveil.tracker.remover.util.hideStatusBar
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 
@@ -24,7 +23,6 @@ class HistoryActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        hideStatusBar()
         binding = ActivityHistoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.toolbar.setNavigationOnClickListener { finish() }
