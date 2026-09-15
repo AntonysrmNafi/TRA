@@ -21,7 +21,6 @@ import com.blockveil.tracker.remover.safety.SafetyChecker
 import com.blockveil.tracker.remover.safety.Verdict
 import com.blockveil.tracker.remover.util.LinkProcessor
 import com.blockveil.tracker.remover.util.NetworkUtils
-import com.blockveil.tracker.remover.util.hideStatusBar
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -34,7 +33,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        hideStatusBar()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
