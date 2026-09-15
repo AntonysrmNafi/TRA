@@ -15,7 +15,6 @@ import com.blockveil.tracker.remover.data.SettingsRepository
 import com.blockveil.tracker.remover.databinding.ActivitySettingsBinding
 import com.blockveil.tracker.remover.util.AppLinks
 import com.blockveil.tracker.remover.util.ThemeMode
-import com.blockveil.tracker.remover.util.hideStatusBar
 import kotlinx.coroutines.launch
 
 class SettingsActivity : AppCompatActivity() {
@@ -25,7 +24,6 @@ class SettingsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        hideStatusBar()
         binding = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.toolbar.setNavigationOnClickListener { finish() }
