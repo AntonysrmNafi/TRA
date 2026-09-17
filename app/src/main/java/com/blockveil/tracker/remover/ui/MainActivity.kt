@@ -16,11 +16,13 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blockveil.tracker.remover.R
 import com.blockveil.tracker.remover.TrackerRemoverApp
+import com.blockveil.tracker.remover.data.SettingsRepository
 import com.blockveil.tracker.remover.databinding.ActivityMainBinding
 import com.blockveil.tracker.remover.safety.SafetyChecker
 import com.blockveil.tracker.remover.safety.Verdict
 import com.blockveil.tracker.remover.util.LinkProcessor
 import com.blockveil.tracker.remover.util.NetworkUtils
+import com.blockveil.tracker.remover.widget.WidgetUpdater
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -65,6 +67,17 @@ class MainActivity : AppCompatActivity() {
 
         observeRecentHistory()
         refreshStats()
+        purgeOldHistoryIfEnabled()
+    }
+
+    /** Runs once per app open: deletes history entries older than the retention window, if that's turned on. */
+    private fun purgeOldHistoryIfEnabled() {
+        if (!app.settings.autoDeleteHistoryEnabled) return
+        val cutoffMillis = System.currentTimeMillis() -
+            SettingsRepository.AUTO_DELETE_AFTER_DAYS * 24L * 60 * 60 * 1000
+        lifecycleScope.launch {
+            app.database.cleanedLinkDao().deleteOlderThan(cutoffMillis)
+        }
     }
 
     override fun onResume() {
@@ -132,6 +145,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     app.settings.recordCleanedLink(displayNames.size)
                     refreshStats()
+                    WidgetUpdater.updateAll(this@MainActivity)
                     setLoading(false)
                     showResult(result.link)
                 }
