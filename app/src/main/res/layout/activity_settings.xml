@@ -275,7 +275,7 @@
                     android:id="@+id/donateRow"
                     style="@style/OtherGridTile"
                     android:layout_marginStart="5dp">
-                    <ImageView style="@style/OtherGridTileIcon" android:src="@drawable/ic_donate" app:tint="@color/bv_tile_pink_text" android:contentDescription="@string/other_donate_desc" />
+                    <ImageView style="@style/OtherGridTileIcon" android:src="@drawable/ic_support" app:tint="@color/bv_tile_pink_text" android:contentDescription="@string/other_donate_desc" />
                     <TextView style="@style/OtherGridTileLabel" android:text="@string/other_donate_title" />
                 </LinearLayout>
             </LinearLayout>
@@ -340,12 +340,13 @@
                     <TextView style="@style/OtherGridTileLabel" android:text="@string/other_about_title" />
                 </LinearLayout>
 
-                <!-- Empty spacer so the odd 7th tile keeps the same width as the rest, not stretched full-width. -->
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:layout_marginStart="5dp" />
+                <LinearLayout
+                    android:id="@+id/addWidgetRow"
+                    style="@style/OtherGridTile"
+                    android:layout_marginStart="5dp">
+                    <ImageView style="@style/OtherGridTileIcon" android:src="@drawable/ic_widget" app:tint="@color/bv_tile_teal_text" android:contentDescription="@string/other_add_widget_desc" />
+                    <TextView style="@style/OtherGridTileLabel" android:text="@string/other_add_widget_title" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
