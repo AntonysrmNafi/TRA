@@ -226,6 +226,15 @@
                         android:textSize="12sp"
                         android:textColor="@color/bv_tile_coral_text" />
 
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/switchAutoDelete"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/settings_auto_delete_history"
+                        android:textSize="12sp"
+                        android:textColor="@color/bv_tile_coral_text" />
+
                     <TextView
                         android:id="@+id/clearHistoryButton"
                         android:layout_width="wrap_content"
