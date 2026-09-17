@@ -5,6 +5,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +21,10 @@ class HistoryActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHistoryBinding
     private lateinit var app: TrackerRemoverApp
+    private lateinit var adapter: HistoryAdapter
+
+    private var fullHistory: List<CleanedLinkEntity> = emptyList()
+    private var searchQuery: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,17 +33,43 @@ class HistoryActivity : AppCompatActivity() {
         binding.toolbar.setNavigationOnClickListener { finish() }
         app = application as TrackerRemoverApp
 
-        val adapter = HistoryAdapter { entity -> HistoryDetailActivity.launch(this, entity) }
+        adapter = HistoryAdapter { entity -> HistoryDetailActivity.launch(this, entity) }
         binding.historyList.layoutManager = LinearLayoutManager(this)
         binding.historyList.adapter = adapter
 
         ItemTouchHelper(SwipeToDeleteCallback(adapter)).attachToRecyclerView(binding.historyList)
 
+        binding.searchInput.doAfterTextChanged {
+            searchQuery = it?.toString().orEmpty()
+            applyFilter()
+        }
+
         lifecycleScope.launch {
             app.database.cleanedLinkDao().observeAll().collect { items ->
-                adapter.submitList(items)
-                binding.emptyText.visibility = if (items.isEmpty()) android.view.View.VISIBLE else android.view.View.GONE
+                fullHistory = items
+                applyFilter()
             }
+        }
+    }
+
+    /** Filters the in-memory list by domain/original/cleaned link, so no extra DB query is needed per keystroke. */
+    private fun applyFilter() {
+        val query = searchQuery.trim().lowercase()
+        val filtered = if (query.isEmpty()) {
+            fullHistory
+        } else {
+            fullHistory.filter {
+                it.domain.lowercase().contains(query) ||
+                    it.original.lowercase().contains(query) ||
+                    it.cleaned.lowercase().contains(query)
+            }
+        }
+        adapter.submitList(filtered)
+        binding.emptyText.visibility = if (filtered.isEmpty()) android.view.View.VISIBLE else android.view.View.GONE
+        binding.emptyText.text = if (fullHistory.isEmpty()) {
+            getString(R.string.history_empty)
+        } else {
+            getString(R.string.history_no_search_results)
         }
     }
 
