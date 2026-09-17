@@ -68,5 +68,29 @@
             android:name=".ui.TextDocumentActivity"
             android:exported="false" />
 
+        <!-- Tapped from the home-screen widget's Clean button. Same
+             invisible-trampoline idea as ShareCleanActivity, so it gets its
+             own isolated taskAffinity for the same reason: without it, an
+             already-running MainActivity task could get pulled to the
+             foreground instead of staying invisible. -->
+        <activity
+            android:name=".ui.WidgetCleanActivity"
+            android:exported="true"
+            android:theme="@style/Theme.TrackerRemover.Transparent"
+            android:excludeFromRecents="true"
+            android:noHistory="true"
+            android:taskAffinity="com.blockveil.tracker.remover.widgettask" />
+
+        <receiver
+            android:name=".widget.TrackerWidgetProvider"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_tracker_remover_info" />
+        </receiver>
+
     </application>
 </manifest>
