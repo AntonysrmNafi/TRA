@@ -10,6 +10,7 @@ import com.blockveil.tracker.remover.TrackerRemoverApp
 import com.blockveil.tracker.remover.databinding.ActivityShareCleanBinding
 import com.blockveil.tracker.remover.util.LinkProcessor
 import com.blockveil.tracker.remover.util.NetworkUtils
+import com.blockveil.tracker.remover.widget.WidgetUpdater
 import kotlinx.coroutines.launch
 
 /**
@@ -69,6 +70,7 @@ class ShareCleanActivity : AppCompatActivity() {
                         app.database.cleanedLinkDao().insert(entity)
                     }
                     app.settings.recordCleanedLink(displayNames.size)
+                    WidgetUpdater.updateAll(this@ShareCleanActivity)
                     reshare(result.link.cleaned)
                 }
             }
