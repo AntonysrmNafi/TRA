@@ -53,6 +53,7 @@
     <string name="settings_enable_domain_age_desc">Warns when a domain was registered very recently (no key needed)</string>
     <string name="settings_section_general">General</string>
     <string name="settings_save_history">Save cleaned links to history</string>
+    <string name="settings_auto_delete_history">Auto-delete after 30 days</string>
     <string name="settings_save_history_desc">Turn off if you don\'t want a local log kept on this device</string>
     <string name="settings_clear_history">Clear history</string>
     <string name="settings_clear_history_done">History cleared</string>
@@ -97,6 +98,12 @@
     <string name="terms_content">Last updated: 2026\n\nBy using Tracker Remover, you agree to the following:\n\n1. What this app does\nTracker Remover strips known tracking parameters from links, can follow shortened links to their real destination, and can optionally check a link\'s safety using services you enable and provide your own API keys for.\n\n2. No warranty\nThis app is provided \"as is,\" without warranty of any kind. Safety checks (Safe Browsing, VirusTotal, domain age) are best-effort signals, not guarantees — a link marked safe can still turn out to be harmful, and the absence of a check result never means a link is unsafe. Use your own judgment before opening or sharing any link.\n\n3. Your responsibility\nYou\'re responsible for any API keys you add and for complying with the terms of the services those keys belong to (Google Safe Browsing, VirusTotal). You\'re responsible for how you use cleaned or shared links.\n\n4. No liability\nThe developer isn\'t liable for any damage or loss resulting from use of this app, to the fullest extent permitted by law.\n\n5. Open source\nThis app\'s source code is available under the terms in its repository (see Source Code in Settings).\n\n6. Changes\nThese terms may change in future versions of the app. Continued use after an update means you accept the current terms.\n\n7. Contact\nQuestions can be sent through the Feedback option in Settings.</string>
 
     <string name="history_empty">Nothing cleaned yet</string>
+    <string name="history_search_hint">Search by domain or link</string>
+    <string name="history_no_search_results">No matches for that search</string>
+
+    <string name="widget_clean_clipboard">Clean Clipboard</string>
+    <string name="widget_clipboard_empty">Clipboard has no link to clean</string>
+    <string name="widget_clean_success">Cleaned the %1$s link, copied to clipboard</string>
     <string name="history_item_deleted">Entry deleted</string>
     <string name="action_undo">Undo</string>
     <string name="history_clear_confirm_title">Clear all history?</string>
