@@ -1,5 +1,7 @@
 package com.blockveil.tracker.remover.ui
 
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -15,6 +17,7 @@ import com.blockveil.tracker.remover.data.SettingsRepository
 import com.blockveil.tracker.remover.databinding.ActivitySettingsBinding
 import com.blockveil.tracker.remover.util.AppLinks
 import com.blockveil.tracker.remover.util.ThemeMode
+import com.blockveil.tracker.remover.widget.TrackerWidgetProvider
 import kotlinx.coroutines.launch
 
 class SettingsActivity : AppCompatActivity() {
@@ -44,6 +47,7 @@ class SettingsActivity : AppCompatActivity() {
 
         binding.switchDomainAge.isChecked = settings.domainAgeEnabled
         binding.switchSaveHistory.isChecked = settings.saveHistory
+        binding.switchAutoDelete.isChecked = settings.autoDeleteHistoryEnabled
 
         val themeButtonId = when (settings.themeMode) {
             "light" -> R.id.themeLightButton
@@ -76,6 +80,10 @@ class SettingsActivity : AppCompatActivity() {
 
         binding.switchSaveHistory.setOnCheckedChangeListener { _, isChecked ->
             settings.saveHistory = isChecked
+        }
+
+        binding.switchAutoDelete.setOnCheckedChangeListener { _, isChecked ->
+            settings.autoDeleteHistoryEnabled = isChecked
         }
 
         binding.clearHistoryButton.setOnClickListener { confirmClearHistory() }
@@ -117,6 +125,17 @@ class SettingsActivity : AppCompatActivity() {
             )
         }
         binding.aboutRow.setOnClickListener { showAbout() }
+        binding.addWidgetRow.setOnClickListener { requestPinWidget() }
+    }
+
+    private fun requestPinWidget() {
+        val appWidgetManager = getSystemService(AppWidgetManager::class.java)
+        val provider = ComponentName(this, TrackerWidgetProvider::class.java)
+        if (appWidgetManager != null && appWidgetManager.isRequestPinAppWidgetSupported) {
+            appWidgetManager.requestPinAppWidget(provider, null, null)
+        } else {
+            Toast.makeText(this, R.string.widget_pin_not_supported, Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun showAbout() {
