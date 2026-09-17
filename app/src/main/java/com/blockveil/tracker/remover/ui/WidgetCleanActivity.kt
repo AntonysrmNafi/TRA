@@ -20,15 +20,31 @@ import kotlinx.coroutines.launch
  * trampoline pattern as ShareCleanActivity (see there for why): reads the
  * clipboard, cleans it, copies the result back to the clipboard, and shows
  * one short Toast, all without visibly opening the app.
+ *
+ * Clipboard reading is deliberately done in onWindowFocusChanged(), not
+ * onCreate(). Since Android 10, an app can only read the clipboard once its
+ * window actually has focus; reading it in onCreate() runs before that
+ * happens and silently returns nothing, which is exactly why the widget
+ * kept reporting an empty clipboard even with a link freshly copied.
  */
 class WidgetCleanActivity : AppCompatActivity() {
 
     private val app: TrackerRemoverApp by lazy { application as TrackerRemoverApp }
+    private var hasStartedProcessing = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(ActivityShareCleanBinding.inflate(layoutInflater).root)
+    }
 
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (!hasFocus || hasStartedProcessing) return
+        hasStartedProcessing = true
+        processClipboard()
+    }
+
+    private fun processClipboard() {
         val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clipText = clipboard.primaryClip?.takeIf { it.itemCount > 0 }?.getItemAt(0)?.text?.toString()
 
