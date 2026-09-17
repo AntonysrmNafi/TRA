@@ -71,12 +71,15 @@
     <string name="settings_section_other">Other</string>
     <string name="other_about_title">About</string>
     <string name="other_about_desc">App info and version</string>
+    <string name="other_add_widget_title">Add Widget</string>
+    <string name="other_add_widget_desc">Pin the home screen widget</string>
+    <string name="widget_pin_not_supported">Long-press your home screen and add the widget from there instead</string>
     <string name="source_not_released_message">The source code hasn\'t been publicly released yet.</string>
 
     <string name="other_feedback_title">Feedback</string>
     <string name="other_feedback_desc">Send an email with feedback</string>
 
-    <string name="other_donate_title">Donate</string>
+    <string name="other_donate_title">Support Us</string>
     <string name="other_donate_desc">Support development of Tracker Remover</string>
 
     <string name="other_source_title">Source Code</string>
