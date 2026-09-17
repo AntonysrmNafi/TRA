@@ -21,6 +21,9 @@ interface CleanedLinkDao {
     @Query("DELETE FROM cleaned_links")
     suspend fun clearAll()
 
+    @Query("DELETE FROM cleaned_links WHERE timestampMillis < :cutoffMillis")
+    suspend fun deleteOlderThan(cutoffMillis: Long)
+
     @Delete
     suspend fun delete(entity: CleanedLinkEntity)
 }
