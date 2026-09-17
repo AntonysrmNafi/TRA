@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Rounded card background for the home-screen widget, reusing the same
+     dark hero-tile purple as the main screen's paste card. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <corners android:radius="20dp" />
+    <solid android:color="@color/bv_tile_hero_bg" />
+</shape>
