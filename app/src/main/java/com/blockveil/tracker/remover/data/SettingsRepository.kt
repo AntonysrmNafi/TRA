@@ -38,6 +38,11 @@ class SettingsRepository(context: Context) {
         get() = prefs.getBoolean(KEY_SAVE_HISTORY, true)
         set(value) = prefs.edit().putBoolean(KEY_SAVE_HISTORY, value).apply()
 
+    /** If true, history entries older than AUTO_DELETE_AFTER_DAYS get purged automatically. */
+    var autoDeleteHistoryEnabled: Boolean
+        get() = prefs.getBoolean(KEY_AUTO_DELETE_ENABLED, false)
+        set(value) = prefs.edit().putBoolean(KEY_AUTO_DELETE_ENABLED, value).apply()
+
     /** One of "system", "light", "dark". */
     var themeMode: String
         get() = prefs.getString(KEY_THEME_MODE, "system") ?: "system"
@@ -74,6 +79,8 @@ class SettingsRepository(context: Context) {
         private const val KEY_VT_KEY = "virustotal_key"
         private const val KEY_DOMAIN_AGE_ENABLED = "domain_age_enabled"
         private const val KEY_SAVE_HISTORY = "save_history"
+        private const val KEY_AUTO_DELETE_ENABLED = "auto_delete_history_enabled"
+        const val AUTO_DELETE_AFTER_DAYS = 30
         private const val KEY_THEME_MODE = "theme_mode"
         private const val KEY_TOTAL_LINKS_CLEANED = "total_links_cleaned"
         private const val KEY_TOTAL_TRACKERS_REMOVED = "total_trackers_removed"
